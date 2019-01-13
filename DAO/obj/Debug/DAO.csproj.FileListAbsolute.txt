@@ -1,0 +1,15 @@
+C:\Users\E7470\Documents\ProjectManagement\DAO\bin\Debug\DAO.dll.config
+C:\Users\E7470\Documents\ProjectManagement\DAO\bin\Debug\DAO.dll
+C:\Users\E7470\Documents\ProjectManagement\DAO\bin\Debug\DAO.pdb
+C:\Users\E7470\Documents\ProjectManagement\DAO\bin\Debug\DTO.dll
+C:\Users\E7470\Documents\ProjectManagement\DAO\bin\Debug\EntityFramework.dll
+C:\Users\E7470\Documents\ProjectManagement\DAO\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\E7470\Documents\ProjectManagement\DAO\bin\Debug\DTO.pdb
+C:\Users\E7470\Documents\ProjectManagement\DAO\bin\Debug\EntityFramework.xml
+C:\Users\E7470\Documents\ProjectManagement\DAO\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\E7470\Documents\ProjectManagement\DAO\obj\Debug\DAO.csprojAssemblyReference.cache
+C:\Users\E7470\Documents\ProjectManagement\DAO\obj\Debug\DAO.csproj.CoreCompileInputs.cache
+C:\Users\E7470\Documents\ProjectManagement\DAO\obj\Debug\DAO.csproj.CopyComplete
+C:\Users\E7470\Documents\ProjectManagement\DAO\obj\Debug\DAO.dll
+C:\Users\E7470\Documents\ProjectManagement\DAO\obj\Debug\DAO.pdb
+C:\Users\E7470\Documents\ProjectManagement\DAO\bin\Debug\DTO.dll.config

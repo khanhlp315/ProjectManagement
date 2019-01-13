@@ -1,0 +1,15 @@
+C:\Users\E7470\Documents\ProjectManagement\BUS\bin\Debug\BUS.dll
+C:\Users\E7470\Documents\ProjectManagement\BUS\bin\Debug\BUS.pdb
+C:\Users\E7470\Documents\ProjectManagement\BUS\bin\Debug\DAO.dll
+C:\Users\E7470\Documents\ProjectManagement\BUS\bin\Debug\DTO.dll
+C:\Users\E7470\Documents\ProjectManagement\BUS\bin\Debug\EntityFramework.dll
+C:\Users\E7470\Documents\ProjectManagement\BUS\bin\Debug\DAO.pdb
+C:\Users\E7470\Documents\ProjectManagement\BUS\bin\Debug\DAO.dll.config
+C:\Users\E7470\Documents\ProjectManagement\BUS\bin\Debug\DTO.pdb
+C:\Users\E7470\Documents\ProjectManagement\BUS\bin\Debug\DTO.dll.config
+C:\Users\E7470\Documents\ProjectManagement\BUS\bin\Debug\EntityFramework.xml
+C:\Users\E7470\Documents\ProjectManagement\BUS\obj\Debug\BUS.csprojAssemblyReference.cache
+C:\Users\E7470\Documents\ProjectManagement\BUS\obj\Debug\BUS.csproj.CoreCompileInputs.cache
+C:\Users\E7470\Documents\ProjectManagement\BUS\obj\Debug\BUS.csproj.CopyComplete
+C:\Users\E7470\Documents\ProjectManagement\BUS\obj\Debug\BUS.dll
+C:\Users\E7470\Documents\ProjectManagement\BUS\obj\Debug\BUS.pdb

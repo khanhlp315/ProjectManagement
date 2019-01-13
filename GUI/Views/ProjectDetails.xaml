@@ -1,0 +1,227 @@
+﻿<UserControl x:Class="GUI.Views.ProjectDetails"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:utils="clr-namespace:GUI.Utils"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:interactionRequest="http://www.codeplex.com/prism"
+             xmlns:dto="clr-namespace:DTO;assembly=DTO"
+             mc:Ignorable="d"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             prism:ViewModelLocator.AutoWireViewModel="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <utils:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVis"/>
+        <utils:SprintStateToSprintTextConverter x:Key="SprintStateConverter"/>
+    </UserControl.Resources>
+    <i:Interaction.Triggers>
+        <interactionRequest:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
+            <interactionRequest:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True" WindowStartupLocation="CenterScreen">
+            </interactionRequest:PopupWindowAction>
+        </interactionRequest:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+    <Grid VerticalAlignment="Stretch">
+        <ScrollViewer>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Grid Height="150">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Column="0" Grid.Row="0">
+                            <Grid>
+                                <Label Content="Project key"/>
+                            </Grid>
+                            <Grid Margin="0,0,0,8">
+                                <TextBox Style="{StaticResource LoginTextBoxStyle}" Text="{Binding ProjectKey}"/>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="0" Grid.Row="1">
+                            <Grid>
+                                <Label Content="Project name"/>
+                            </Grid>
+                            <Grid Margin="0,0,0,8">
+                                <TextBox Style="{StaticResource LoginTextBoxStyle}" Text="{Binding ProjectName}"  />
+                            </Grid>
+
+                        </StackPanel>
+                        <Button Content="Edit" Command="{Binding EditProjectCommand}" Grid.Row="0" Grid.Column="1" Margin="20"></Button>
+                        <Button Content="Delete" Command="{Binding DeleteProjectCommand}" Background="Red" Grid.Row="1" Grid.Column="1" Margin="20"></Button>
+                    </Grid>
+                    <Label Content="Members"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <utils:DraggableItemsControl Margin="30" Format="Member" Grid.Column="0" ItemsSource="{Binding NotInProjectUsers}">
+                            <utils:DraggableItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Label  Content="{Binding Username}"/>
+                                </DataTemplate>
+                            </utils:DraggableItemsControl.ItemTemplate>
+                        </utils:DraggableItemsControl>
+                        <utils:DroppableItemsControl Format="Member" Margin="30" Grid.Column="1" ItemsSource="{Binding SelectedProject.Members}">
+                            <utils:DroppableItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="{Binding User.Username}" />
+                                        <Label Content="{Binding Role}" />
+                                        <Button Content="-" Command="{Binding DataContext.RemoveFromProjectCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DroppableItemsControl}}" CommandParameter="{Binding Id}"></Button>
+                                        <Button Content="Change Role" Command="{Binding DataContext.ShowChangeRoleCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DroppableItemsControl}}" CommandParameter="{Binding Id}"></Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </utils:DroppableItemsControl.ItemTemplate>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="DropItem">
+                                    <utils:EventCommandExecuter Command="{Binding ShowAddMemberCommand, Mode=OneTime}" EventArgsConverter="{x:Static utils:DropEventArgsToDataConverter.Default}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </utils:DroppableItemsControl>
+                    </Grid>
+                    <Label Content="Epics"/>
+                    <ItemsControl ItemsSource="{Binding SelectedProject.Epics}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Expander Header="{Binding Title}" ToolTip="{Binding Description}">
+                                        <utils:DraggableItemsControl Format="UserStory" ItemsSource="{Binding UserStories}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Vertical">
+                                                        <Label Content="{Binding Title}" ToolTip="{Binding Description}"/>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Label Content="Story points: "></Label>
+                                                            <Label Content="{Binding StoryPoints}" />
+                                                        </StackPanel>
+                                                        <StackPanel.Style>
+                                                            <Style TargetType="StackPanel">
+                                                                <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                                                <Style.Triggers>
+                                                                    <MultiDataTrigger>
+                                                                        <MultiDataTrigger.Conditions>
+                                                                            <Condition Binding="{Binding State}" Value="{x:Static dto:UserStoryState.BACKLOG}"></Condition>
+                                                                        </MultiDataTrigger.Conditions>
+                                                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                                                    </MultiDataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </StackPanel.Style>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </utils:DraggableItemsControl>
+
+                                    </Expander>
+                                    <Button Content="Add User story" Command="{Binding DataContext.ShowAddUserStoryCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}}" CommandParameter="{Binding Id}"></Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Button Content="Add epic" Command="{Binding ShowAddEpicCommand}"></Button>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Name="ProjectBoard">
+                    <Button Content="Start Project" Visibility="{Binding IsProjectStarted, Converter={StaticResource InverseBoolToVis}}" Command="{Binding StartProjectCommand}"></Button>
+                    <StackPanel Visibility="{Binding IsProjectStarted, Converter={StaticResource BoolToVis}}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Sprint #"/>
+                            <Label Content="{Binding CurrentSprint.Order}"/>
+                        </StackPanel>
+                        <Button Content="{Binding CurrentSprint.State, Converter={StaticResource SprintStateConverter}}" Command="{Binding ChangeSprintStateCommand}"></Button>
+                        <utils:DroppableItemsControl Format="UserStory" ItemsSource="{Binding CurrentSprint.UserStories}">
+                            <utils:DroppableItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Title}"></Label>
+                                </DataTemplate>
+                            </utils:DroppableItemsControl.ItemTemplate>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="DropItem">
+                                    <utils:EventCommandExecuter Command="{Binding AddUserStoryToSprintCommand, Mode=OneTime}" EventArgsConverter="{x:Static utils:DropEventArgsToDataConverter.Default}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </utils:DroppableItemsControl>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+        <Grid Visibility="{Binding SelectingRole, Converter={StaticResource BoolToVis}}"  Background="#0F000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <StackPanel Background="White" Width="200" Height="200" VerticalAlignment="Center">
+                <Label Content="Select Role" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
+                <ComboBox Margin="12,4,12,12"  ItemsSource="{Binding Source={utils:Enumeration {x:Type dto:Role}}}"
+                          SelectedValue="{Binding SelectedRole}"
+                          DisplayMemberPath="Description"
+                          SelectedValuePath="Value"/>
+                <Button Content="Add to project" Command="{Binding AddMemberCommand}" Margin="10"/>
+                <Button Content="Cancel" Background="Red" Command="{Binding CancelAddMemberCommand}" Margin="10"/>
+            </StackPanel>
+        </Grid>
+        <Grid Visibility="{Binding ChangingRole, Converter={StaticResource BoolToVis}}"  Background="#0F000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <StackPanel Background="White" Width="200" Height="200" VerticalAlignment="Center">
+                <Label Content="Change Role" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
+                <ComboBox Margin="12,4,12,12"  ItemsSource="{Binding Source={utils:Enumeration {x:Type dto:Role}}}"
+                          SelectedValue="{Binding SelectedRole}"
+                          DisplayMemberPath="Description"
+                          SelectedValuePath="Value"/>
+                <Button Content="Change" Command="{Binding ChangeMemberRoleCommand}" Margin="10"/>
+                <Button Content="Cancel" Background="Red" Command="{Binding CancelChangeRoleCommand}" Margin="10"/>
+            </StackPanel>
+        </Grid>
+        <Grid Visibility="{Binding AddingEpic, Converter={StaticResource BoolToVis}}"  Background="#0F000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <StackPanel Background="White" Width="200" Height="300" VerticalAlignment="Center">
+                <Label Content="Add Epic" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
+                <Grid>
+                    <Label Content="Title"/>
+                </Grid>
+                <Grid Margin="2, 0, 12 12">
+                    <TextBox  Text="{Binding EpicTitle}"  />
+                </Grid>
+                <Grid>
+                    <Label Content="Description"/>
+                </Grid>
+                <Grid Margin="2, 0, 12 12">
+                    <TextBox  Text="{Binding EpicDescription}" />
+                </Grid>
+                <Button Content="Add" Command="{Binding AddEpicCommand}" Margin="10"/>
+                <Button Content="Cancel" Background="Red" Command="{Binding CancelAddEpicCommand}" Margin="10"/>
+            </StackPanel>
+        </Grid>
+        <Grid Visibility="{Binding AddingUserStory, Converter={StaticResource BoolToVis}}"  Background="#0F000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <StackPanel Background="White" Width="200" Height="350" VerticalAlignment="Center">
+                <Label Content="Add User story" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
+                <Grid>
+                    <Label Content="Title"/>
+                </Grid>
+                <Grid Margin="2, 0, 12 12">
+                    <TextBox  Text="{Binding UserStoryTitle}"  />
+                </Grid>
+                <Grid>
+                    <Label Content="Description"/>
+                </Grid>
+                <Grid Margin="2, 0, 12 12">
+                    <TextBox  Text="{Binding UserStoryDescription}" />
+                </Grid>
+                <Grid>
+                    <Label Content="Story Points"/>
+                </Grid>
+                <Grid Margin="2, 0, 12 12">
+                    <TextBox  Text="{Binding UserStoryStoryPoints}"  />
+                </Grid>
+                <Button Content="Add" Command="{Binding AddUserStoryCommand}" Margin="10"/>
+                <Button Content="Cancel" Background="Red" Command="{Binding CancelAddUserStoryCommand}" Margin="10"/>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+    
+</UserControl>
