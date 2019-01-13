@@ -17,7 +17,7 @@
             </interactionRequest:PopupWindowAction>
         </interactionRequest:InteractionRequestTrigger>
     </i:Interaction.Triggers>
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <!--<StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Label Content="Create project" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
 
         <Grid>
@@ -34,5 +34,70 @@
         </Grid>
         <StackPanel Height="34" />
         <Button Content="Create" Width="220" Height="36" TabIndex="3" Margin="0,0,0,32" IsDefault="True" Command="{Binding CreateProjectCommand}"/>
-    </StackPanel>
+    </StackPanel>-->
+    <Grid>
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Width="350">
+            <Button Style="{StaticResource MenuButtonStyle}"
+                    IsEnabled="False"
+                    Foreground="OrangeRed"
+                    Content="Create project" />
+            <Border BorderThickness="0,0,0,1"
+                    BorderBrush="LightGray"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Stretch"
+                    Margin="0,10" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Project Key"
+                           Style="{StaticResource CustomTextblockStyle}" />
+                <TextBox x:Name="ProjectKeyTextBox"
+                         Style="{StaticResource CustomTextboxStyle}"
+                         Grid.Column="1"
+                         Text="{Binding ProjectKey}"
+                         />
+
+
+                <TextBlock Text="Project Name"
+                           Style="{StaticResource CustomTextblockStyle}"
+                           Grid.Row="1" />
+                <TextBox x:Name="ProjectNameTextBox"
+                         Style="{StaticResource CustomTextboxStyle}"
+                         Grid.Column="1"
+                         Grid.Row="1"
+                         Text="{Binding ProjectName}"
+                         />
+                <Button x:Name="CreateButton"
+                        Grid.Row="2"
+                        Grid.ColumnSpan="2"
+                        Content="Create"
+                        Command="{Binding CreateProjectCommand}">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource ToolbarButtonStyle}"
+                               TargetType="Button">
+                            <Setter Property="IsEnabled"
+                                    Value="True" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=AccountNameTextBox, Path=Text}"
+                                             Value="">
+                                    <Setter Property="IsEnabled"
+                                            Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </StackPanel>
+    </Grid>
 </UserControl>

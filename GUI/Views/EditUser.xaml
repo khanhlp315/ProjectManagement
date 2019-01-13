@@ -11,13 +11,13 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              mc:Ignorable="d"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              prism:ViewModelLocator.AutoWireViewModel="True" VerticalAlignment="Center">
-    <i:Interaction.Triggers>
+    <!--<i:Interaction.Triggers>
         <interactionRequest:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
             <interactionRequest:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True" WindowStartupLocation="CenterScreen">
             </interactionRequest:PopupWindowAction>
         </interactionRequest:InteractionRequestTrigger>
-    </i:Interaction.Triggers>
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+    </i:Interaction.Triggers>-->
+    <!--<StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Label Content="{Binding SelectedUser.Username}" ContentStringFormat="@{0}" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
 
         <Grid>
@@ -44,5 +44,81 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         <StackPanel Height="34" />
         <Button Content="Edit" Width="220" Height="36" Margin="0,0,0,12" Command="{Binding EditUserCommand}"/>
         <Button Content="Delete" Background="Red" Width="220" Height="36" Command="{Binding DeleteUserCommand}"/>
-    </StackPanel>
+    </StackPanel>-->
+    <Grid>
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Width="350">
+            <Button Style="{StaticResource MenuButtonStyle}"
+                    IsEnabled="False"
+                    Foreground="OrangeRed"
+                    Content="Change User Info" />
+            <Border BorderThickness="0,0,0,1"
+                    BorderBrush="LightGray"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Stretch"
+                    Margin="0,10" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Name"
+                           Style="{StaticResource CustomTextblockStyle}" />
+                <TextBox x:Name="ProjectKeyTextBox"
+                         Style="{StaticResource CustomTextboxStyle}"
+                         Grid.Column="1"
+                         Text="{Binding SelectedUser.Username}"
+                         />
+
+
+                <TextBlock Text="Password"
+                           Style="{StaticResource CustomTextblockStyle}"
+                           Grid.Row="1" />
+                <PasswordBox x:Name="ProjectNameTextBox"
+                         Style="{StaticResource CustomPasswordBoxStyle}"
+                         Grid.Column="1"
+                         Grid.Row="1"
+                         utils:PasswordHelper.Attach="True" utils:PasswordHelper.Password="{Binding SelectedUser.Password, Mode=TwoWay}"
+                         />
+                <TextBlock Text="Permission"
+                           Style="{StaticResource CustomTextblockStyle}"
+                           Grid.Row="2" />
+
+                <ComboBox ItemsSource="{Binding Source={utils:Enumeration {x:Type dto:Permission}}}"
+                      SelectedValue="{Binding SelectedUser.Permission}"
+                      SelectedValuePath="Value"
+                      Grid.Column="1"
+                      Grid.Row="2"
+                      Style="{StaticResource FlatComboBoxStyle}"/>
+                <Button x:Name="CreateButton"
+                        Grid.Row="3"
+                        Grid.ColumnSpan="2"
+                        Content="Create"
+                        Command="{Binding CreateProjectCommand}">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource ToolbarButtonStyle}"
+                               TargetType="Button">
+                            <Setter Property="IsEnabled"
+                                    Value="True" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=AccountNameTextBox, Path=Text}"
+                                             Value="">
+                                    <Setter Property="IsEnabled"
+                                            Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </StackPanel>
+    </Grid>
 </UserControl>
