@@ -12,12 +12,12 @@
              Background="{DynamicResource WindowBackgroundBrush}"
              >
     <i:Interaction.Triggers>
-        <interactionRequest:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
+        <prism:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
             <interactionRequest:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True" WindowStartupLocation="CenterScreen">
             </interactionRequest:PopupWindowAction>
-        </interactionRequest:InteractionRequestTrigger>
+        </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <!--<StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Label Content="Login" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
 
         <Grid>
@@ -35,6 +35,68 @@
 
         <StackPanel Height="34" />
         <Button Content="Login" Width="220" Height="36" TabIndex="3" Margin="0,0,0,32" IsDefault="True" Command="{Binding LoginCommand}"/>
-    </StackPanel>
+    </StackPanel>-->
+    <Grid>
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Width="350">
+            <Button Style="{StaticResource MenuButtonStyle}"
+                    IsEnabled="False"
+                    Foreground="OrangeRed"
+                    Content="Account" />
+            <Border BorderThickness="0,0,0,1"
+                    BorderBrush="LightGray"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Stretch"
+                    Margin="0,10" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
 
+                <TextBlock Text="Username"
+                           Style="{StaticResource CustomTextblockStyle}" />
+                <TextBox x:Name="AccountNameTextBox"
+                         Style="{StaticResource CustomTextboxStyle}"
+                         Grid.Column="1"
+                         Text="{Binding Username}"
+                         />
+
+
+                <TextBlock Text="Password"
+                           Style="{StaticResource CustomTextblockStyle}"
+                           Grid.Row="1" />
+                <PasswordBox x:Name="AccountPasswordPasswordBox"
+                             Style="{StaticResource CustomPasswordBoxStyle}"
+                             Grid.Row="1"
+                             Grid.Column="1" utils:PasswordHelper.Attach="True" utils:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"/>
+                <Button x:Name="LoginButton"
+                        Grid.Row="2"
+                        Grid.ColumnSpan="2"
+                        Content="Login"
+                        Command="{Binding LoginCommand}">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource ToolbarButtonStyle}"
+                               TargetType="Button">
+                            <Setter Property="IsEnabled"
+                                    Value="True" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=AccountNameTextBox, Path=Text}"
+                                             Value="">
+                                    <Setter Property="IsEnabled"
+                                            Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </StackPanel>
+    </Grid>
 </UserControl>

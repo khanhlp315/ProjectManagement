@@ -13,3 +13,17 @@ C:\Users\E7470\Documents\ProjectManagement\DAO\obj\Debug\DAO.csproj.CopyComplete
 C:\Users\E7470\Documents\ProjectManagement\DAO\obj\Debug\DAO.dll
 C:\Users\E7470\Documents\ProjectManagement\DAO\obj\Debug\DAO.pdb
 C:\Users\E7470\Documents\ProjectManagement\DAO\bin\Debug\DTO.dll.config
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\DAO\bin\Debug\DAO.dll.config
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\DAO\bin\Debug\DAO.dll
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\DAO\bin\Debug\DAO.pdb
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\DAO\bin\Debug\DTO.dll
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\DAO\bin\Debug\EntityFramework.dll
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\DAO\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\DAO\bin\Debug\DTO.pdb
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\DAO\bin\Debug\DTO.dll.config
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\DAO\bin\Debug\EntityFramework.xml
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\DAO\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\DAO\obj\Debug\DAO.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\DAO\obj\Debug\DAO.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\DAO\obj\Debug\DAO.dll
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\DAO\obj\Debug\DAO.pdb
