@@ -15,13 +15,14 @@
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
         <utils:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVis"/>
         <utils:SprintStateToSprintTextConverter x:Key="SprintStateConverter"/>
+        <utils:MemberToUsernameConverter x:Key="MemberToUsername"/>
     </UserControl.Resources>
-    <!--<i:Interaction.Triggers>
+    <i:Interaction.Triggers>
         <interactionRequest:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
             <interactionRequest:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True" WindowStartupLocation="CenterScreen">
             </interactionRequest:PopupWindowAction>
         </interactionRequest:InteractionRequestTrigger>
-    </i:Interaction.Triggers>-->
+    </i:Interaction.Triggers>
     <Grid VerticalAlignment="Stretch">
         <ScrollViewer>
             <Grid>
@@ -30,7 +31,7 @@
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Grid Height="150">
+                    <Grid Height="Auto">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="4*"></ColumnDefinition>
                             <ColumnDefinition Width="4*"></ColumnDefinition>
@@ -41,7 +42,7 @@
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Column="0" Grid.Row="0">
                             <Grid>
-                                <Label Content="Project key"/>
+                                <TextBlock Text="Project key" Style="{StaticResource CustomTextblockStyle}"/>
                             </Grid>
                             <Grid Margin="0,0,0,8">
                                 <TextBox Style="{StaticResource LoginTextBoxStyle}" Text="{Binding ProjectKey}"/>
@@ -49,115 +50,221 @@
                         </StackPanel>
                         <StackPanel Grid.Column="0" Grid.Row="1">
                             <Grid>
-                                <Label Content="Project name"/>
+                                <TextBlock Text="Project name" Style="{StaticResource CustomTextblockStyle}"/>
                             </Grid>
                             <Grid Margin="0,0,0,8">
                                 <TextBox Style="{StaticResource LoginTextBoxStyle}" Text="{Binding ProjectName}"  />
                             </Grid>
 
                         </StackPanel>
-                        <Button Content="Edit" Command="{Binding EditProjectCommand}" Grid.Row="0" Grid.Column="1" Margin="20"></Button>
-                        <Button Content="Delete" Command="{Binding DeleteProjectCommand}" Background="Red" Grid.Row="1" Grid.Column="1" Margin="20"></Button>
+                        <Button Content="Edit" Command="{Binding EditProjectCommand}" Grid.Row="0" Grid.Column="1" Margin="20, 40" ></Button>
+                        <Button Content="Delete" Command="{Binding DeleteProjectCommand}" Background="Red" Grid.Row="1" Grid.Column="1" Margin="20, 40"></Button>
                     </Grid>
-                    <Label Content="Members"/>
+
                     <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="4*"/>
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
-                        <utils:DraggableItemsControl Margin="30" Format="Member" Grid.Column="0" ItemsSource="{Binding NotInProjectUsers}">
-                            <utils:DraggableItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Label  Content="{Binding Username}"/>
-                                </DataTemplate>
-                            </utils:DraggableItemsControl.ItemTemplate>
-                        </utils:DraggableItemsControl>
-                        <utils:DroppableItemsControl Format="Member" Margin="30" Grid.Column="1" ItemsSource="{Binding SelectedProject.Members}">
-                            <utils:DroppableItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Label Content="{Binding User.Username}" />
-                                        <Label Content="{Binding Role}" />
-                                        <Button Content="-" Command="{Binding DataContext.RemoveFromProjectCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DroppableItemsControl}}" CommandParameter="{Binding Id}"></Button>
-                                        <Button Content="Change Role" Command="{Binding DataContext.ShowChangeRoleCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DroppableItemsControl}}" CommandParameter="{Binding Id}"></Button>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </utils:DroppableItemsControl.ItemTemplate>
-                            <!--<i:Interaction.Triggers>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Available Users" Style="{StaticResource CustomTextblockStyle}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Members" HorizontalAlignment="Center" Style="{StaticResource CustomTextblockStyle}"/>
+
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="4*"/>
+                            </Grid.RowDefinitions>
+                            <TextBox Grid.Row="0" MaxHeight="35" VerticalContentAlignment="Center">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                                        <Style.Resources>
+                                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label Content="Search" Foreground="LightGray" />
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="White" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <utils:DraggableItemsControl Grid.Row="1" Margin="30" Format="Member"  ItemsSource="{Binding NotInProjectUsers}">
+                                <utils:DraggableItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Username}" />
+                                    </DataTemplate>
+                                </utils:DraggableItemsControl.ItemTemplate>
+                            </utils:DraggableItemsControl>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="4*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <StackPanel Orientation="Vertical">
+                                    <Button Content="Remove"  Width ="{Binding Path=ActualWidth, ElementName=membersDDICT}"  Margin="20,5" Command="{Binding DataContext.RemoveFromProjectCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DraggableAndDroppableItemsControl}}" CommandParameter="{Binding Id}"></Button>
+                                    <Button Content="Change Role" Width ="{Binding Path=ActualWidth, ElementName=membersDDICT}" Margin="20,5" Command="{Binding DataContext.ShowChangeRoleCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DraggableAndDroppableItemsControl}}" CommandParameter="{Binding Id}"></Button>
+                                </StackPanel>
+                                
+                            </Grid>
+                            <utils:DraggableAndDroppableItemsControl x:Name="membersDDICT" Grid.Row="1" DragFormat="Assign" DropFormat="Member" Margin="30" Grid.Column="1" ItemsSource="{Binding SelectedProject.Members}">
+                                <utils:DraggableAndDroppableItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border x:Name="Border"
+                                                Padding="8"
+                                                BorderThickness="0 0 0 1"
+                                                BorderBrush="{DynamicResource MaterialDesignDivider}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition SharedSizeGroup="Checkerz" />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <ToggleButton
+                                                    VerticalAlignment="Center"
+                                                    IsChecked="{Binding IsSelected}"
+                                                    Style="{StaticResource MaterialDesignActionLightToggleButton}"
+                                                    Content="{Binding Role, StringFormat='{}{0}'}"/>
+                                                <StackPanel
+                                                    Margin="8 0 0 0"
+                                                    Grid.Column="1">
+                                                    <TextBlock
+                                                        FontWeight="Bold"
+                                                        Text="{Binding User.Username}" />
+                                                    <TextBlock
+                                                        Text="{Binding Role}" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </utils:DraggableAndDroppableItemsControl.ItemTemplate>
+                                <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="DropItem">
                                     <utils:EventCommandExecuter Command="{Binding ShowAddMemberCommand, Mode=OneTime}" EventArgsConverter="{x:Static utils:DropEventArgsToDataConverter.Default}"/>
                                 </i:EventTrigger>
-                            </i:Interaction.Triggers>-->
-                        </utils:DroppableItemsControl>
+                            </i:Interaction.Triggers>
+                            </utils:DraggableAndDroppableItemsControl>
+                        </Grid>
+
                     </Grid>
-                    <Label Content="Epics"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Name="ProjectBoard">
+                    <Button Content="Start Project" Visibility="{Binding IsProjectStarted, Converter={StaticResource InverseBoolToVis}}" Command="{Binding StartProjectCommand}"></Button>
+                    <StackPanel Visibility="{Binding IsProjectStarted, Converter={StaticResource BoolToVis}}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Sprint #"/>
+                            <TextBlock Text="{Binding CurrentSprint.Order}"/>
+                        </StackPanel>
+                        <Button Content="{Binding CurrentSprint.State, Converter={StaticResource SprintStateConverter}}" Command="{Binding ChangeSprintStateCommand}"></Button>
+                        <utils:DroppableItemsControl Format="UserStory" ItemsSource="{Binding CurrentSprint.UserStories}">
+                            <utils:DroppableItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Title}"></TextBlock>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Story Points: "/>
+                                            <TextBlock Text="{Binding StoryPoints}"/>
+                                        </StackPanel>
+                                        <Expander Header="Tasks: ">
+                                            <ItemsControl ItemsSource="{Binding Tasks}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel>
+                                                            <TextBlock Text="{Binding Title}"/>
+                                                            <CheckBox IsEnabled="False" IsChecked="{Binding IsDone}"></CheckBox>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{Binding AssignedMember, Converter={StaticResource MemberToUsername}}">
+                                                                </TextBlock>
+                                                                <Button Content="Assign" CommandParameter="{Binding Id}" Command="{Binding DataContext.ShowAssignMemberCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DroppableItemsControl}}"></Button>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </Expander>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </utils:DroppableItemsControl.ItemTemplate>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="DropItem">
+                                    <utils:EventCommandExecuter Command="{Binding AddUserStoryToSprintCommand, Mode=OneTime}" EventArgsConverter="{x:Static utils:DropEventArgsToDataConverter.Default}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </utils:DroppableItemsControl>
+                    </StackPanel>
+                    <TextBlock Text="Available User stories" Style="{StaticResource CustomTextblockStyle}"/>
                     <ItemsControl ItemsSource="{Binding SelectedProject.Epics}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
                                     <Expander Header="{Binding Title}" ToolTip="{Binding Description}">
-                                        <utils:DraggableItemsControl Format="UserStory" ItemsSource="{Binding UserStories}">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel Orientation="Vertical">
-                                                        <Label Content="{Binding Title}" ToolTip="{Binding Description}"/>
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <Label Content="Story points: "></Label>
-                                                            <Label Content="{Binding StoryPoints}" />
+                                        <StackPanel>
+                                            <utils:DraggableItemsControl Format="UserStory" ItemsSource="{Binding UserStories}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Vertical">
+                                                            <Expander Header="{Binding Title}" ToolTip="{Binding Description}">
+                                                                <StackPanel>
+                                                                    <ItemsControl ItemsSource="{Binding Tasks}">
+                                                                        <ItemsControl.ItemTemplate>
+                                                                            <DataTemplate>
+                                                                                <TextBlock Text="{Binding Title}"/>
+                                                                            </DataTemplate>
+                                                                        </ItemsControl.ItemTemplate>
+                                                                    </ItemsControl>
+                                                                    <Button Content="Add task" CommandParameter="{Binding Id}" Command="{Binding DataContext.ShowAddTaskCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl,AncestorLevel=2}}"/>
+                                                                </StackPanel>
+                                                            </Expander>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="Story points: "></TextBlock>
+                                                                <TextBlock Text="{Binding StoryPoints}" />
+                                                            </StackPanel>
+                                                            <StackPanel.Style>
+                                                                <Style TargetType="StackPanel">
+                                                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                                                    <Style.Triggers>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding State}" Value="{x:Static dto:UserStoryState.BACKLOG}"></Condition>
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                                                        </MultiDataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </StackPanel.Style>
                                                         </StackPanel>
-                                                        <StackPanel.Style>
-                                                            <Style TargetType="StackPanel">
-                                                                <Setter Property="Visibility" Value="Collapsed"></Setter>
-                                                                <Style.Triggers>
-                                                                    <MultiDataTrigger>
-                                                                        <MultiDataTrigger.Conditions>
-                                                                            <Condition Binding="{Binding State}" Value="{x:Static dto:UserStoryState.BACKLOG}"></Condition>
-                                                                        </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Visibility" Value="Visible"></Setter>
-                                                                    </MultiDataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </StackPanel.Style>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </utils:DraggableItemsControl>
-
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </utils:DraggableItemsControl>
+                                            <Button Content="Add User story" Command="{Binding DataContext.ShowAddUserStoryCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}}" CommandParameter="{Binding Id}"></Button>
+                                        </StackPanel>
                                     </Expander>
-                                    <Button Content="Add User story" Command="{Binding DataContext.ShowAddUserStoryCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}}" CommandParameter="{Binding Id}"></Button>
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                     <Button Content="Add epic" Command="{Binding ShowAddEpicCommand}"></Button>
                 </StackPanel>
-                <StackPanel Grid.Column="1" Name="ProjectBoard">
-                    <Button Content="Start Project" Visibility="{Binding IsProjectStarted, Converter={StaticResource InverseBoolToVis}}" Command="{Binding StartProjectCommand}"></Button>
-                    <StackPanel Visibility="{Binding IsProjectStarted, Converter={StaticResource BoolToVis}}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Sprint #"/>
-                            <Label Content="{Binding CurrentSprint.Order}"/>
-                        </StackPanel>
-                        <Button Content="{Binding CurrentSprint.State, Converter={StaticResource SprintStateConverter}}" Command="{Binding ChangeSprintStateCommand}"></Button>
-                        <utils:DroppableItemsControl Format="UserStory" ItemsSource="{Binding CurrentSprint.UserStories}">
-                            <utils:DroppableItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Label Content="{Binding Title}"></Label>
-                                </DataTemplate>
-                            </utils:DroppableItemsControl.ItemTemplate>
-                            <!--<i:Interaction.Triggers>
-                                <i:EventTrigger EventName="DropItem">
-                                    <utils:EventCommandExecuter Command="{Binding AddUserStoryToSprintCommand, Mode=OneTime}" EventArgsConverter="{x:Static utils:DropEventArgsToDataConverter.Default}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>-->
-                        </utils:DroppableItemsControl>
-                    </StackPanel>
-                </StackPanel>
+                
             </Grid>
         </ScrollViewer>
         <Grid Visibility="{Binding SelectingRole, Converter={StaticResource BoolToVis}}"  Background="#0F000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <StackPanel Background="White" Width="200" Height="200" VerticalAlignment="Center">
-                <Label Content="Select Role" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
+                <TextBlock Text="Select Role" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></TextBlock>
                 <ComboBox Margin="12,4,12,12"  ItemsSource="{Binding Source={utils:Enumeration {x:Type dto:Role}}}"
                           SelectedValue="{Binding SelectedRole}"
                           DisplayMemberPath="Description"
@@ -168,7 +275,7 @@
         </Grid>
         <Grid Visibility="{Binding ChangingRole, Converter={StaticResource BoolToVis}}"  Background="#0F000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <StackPanel Background="White" Width="200" Height="200" VerticalAlignment="Center">
-                <Label Content="Change Role" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
+                <TextBlock Text="Change Role" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></TextBlock>
                 <ComboBox Margin="12,4,12,12"  ItemsSource="{Binding Source={utils:Enumeration {x:Type dto:Role}}}"
                           SelectedValue="{Binding SelectedRole}"
                           DisplayMemberPath="Description"
@@ -179,15 +286,15 @@
         </Grid>
         <Grid Visibility="{Binding AddingEpic, Converter={StaticResource BoolToVis}}"  Background="#0F000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <StackPanel Background="White" Width="200" Height="300" VerticalAlignment="Center">
-                <Label Content="Add Epic" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
+                <TextBlock Text="Add Epic" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></TextBlock>
                 <Grid>
-                    <Label Content="Title"/>
+                    <TextBlock Text="Title"/>
                 </Grid>
                 <Grid Margin="2, 0, 12 12">
                     <TextBox  Text="{Binding EpicTitle}"  />
                 </Grid>
                 <Grid>
-                    <Label Content="Description"/>
+                    <TextBlock Text="Description"/>
                 </Grid>
                 <Grid Margin="2, 0, 12 12">
                     <TextBox  Text="{Binding EpicDescription}" />
@@ -198,21 +305,21 @@
         </Grid>
         <Grid Visibility="{Binding AddingUserStory, Converter={StaticResource BoolToVis}}"  Background="#0F000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <StackPanel Background="White" Width="200" Height="350" VerticalAlignment="Center">
-                <Label Content="Add User story" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
+                <TextBlock Text="Add User story" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></TextBlock>
                 <Grid>
-                    <Label Content="Title"/>
+                    <TextBlock Text="Title"/>
                 </Grid>
                 <Grid Margin="2, 0, 12 12">
                     <TextBox  Text="{Binding UserStoryTitle}"  />
                 </Grid>
                 <Grid>
-                    <Label Content="Description"/>
+                    <TextBlock Text="Description"/>
                 </Grid>
                 <Grid Margin="2, 0, 12 12">
                     <TextBox  Text="{Binding UserStoryDescription}" />
                 </Grid>
                 <Grid>
-                    <Label Content="Story Points"/>
+                    <TextBlock Text="Story Points"/>
                 </Grid>
                 <Grid Margin="2, 0, 12 12">
                     <TextBox  Text="{Binding UserStoryStoryPoints}"  />
@@ -221,7 +328,58 @@
                 <Button Content="Cancel" Background="Red" Command="{Binding CancelAddUserStoryCommand}" Margin="10"/>
             </StackPanel>
         </Grid>
+        <Grid Visibility="{Binding AddingTask, Converter={StaticResource BoolToVis}}"  Background="#0F000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <StackPanel Background="White" Width="200" Height="350" VerticalAlignment="Center">
+                <TextBlock Text="Add Task" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></TextBlock>
+                <Grid>
+                    <TextBlock Text="Title"/>
+                </Grid>
+                <Grid Margin="2, 0, 12 12">
+                    <TextBox  Text="{Binding TaskTitle}"  />
+                </Grid>
+                <Button Content="Add" Command="{Binding AddTaskCommand}" Margin="10"/>
+                <Button Content="Cancel" Background="Red" Command="{Binding CancelAddTaskCommand}" Margin="10"/>
+            </StackPanel>
+        </Grid>
+        <Grid Visibility="{Binding AssigningMember, Converter={StaticResource BoolToVis}}"  Background="#0F000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <StackPanel Background="White" Width="200" Height="350" VerticalAlignment="Center">
+                <TextBlock Text="Add Task" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></TextBlock>
+                <Grid>
+                    <TextBlock Text="Member"/>
+                </Grid>
+                <Grid Margin="2, 0, 12 12">
+                    <ComboBox ItemsSource="{Binding SelectedProject.Members}" SelectedValue="{Binding AssignedMember}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding User.Username}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </Grid>
+                <Button Content="Add" Command="{Binding AssignMemberCommand}" Margin="10"/>
+                <Button Content="Cancel" Background="Red" Command="{Binding CancelAssignMemberCommand}" Margin="10"/>
+            </StackPanel>
+        </Grid>
+        <Grid Visibility="{Binding StartingSprint, Converter={StaticResource BoolToVis}}"  Background="#0F000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <StackPanel Background="White" Width="200" Height="350" VerticalAlignment="Center">
+                <TextBlock Text="Add Task" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></TextBlock>
+                <Grid>
+                    <TextBlock Text="Member"/>
+                </Grid>
+                <Grid Margin="2, 0, 12 12">
+                    <ComboBox ItemsSource="{Binding SelectedProject.Members}" SelectedValue="{Binding AssignedMember}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding User.Username}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </Grid>
+                <Button Content="Add" Command="{Binding AssignMemberCommand}" Margin="10"/>
+                <Button Content="Cancel" Background="Red" Command="{Binding CancelAssignMemberCommand}" Margin="10"/>
+            </StackPanel>
+        </Grid>
 
     </Grid>
-    
+
 </UserControl>

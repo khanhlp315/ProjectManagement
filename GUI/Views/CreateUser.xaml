@@ -12,7 +12,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              prism:ViewModelLocator.AutoWireViewModel="True" VerticalAlignment="Center">
     <i:Interaction.Triggers>
-        <interactionRequest:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
+        <interactionRequest:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=TwoWay}">
             <interactionRequest:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True" WindowStartupLocation="CenterScreen">
             </interactionRequest:PopupWindowAction>
         </interactionRequest:InteractionRequestTrigger>
@@ -82,11 +82,11 @@
                 <TextBlock Text="Password"
                            Style="{StaticResource CustomTextblockStyle}"
                            Grid.Row="1" />
-                <TextBox x:Name="PasswordTextBox"
-                         Style="{StaticResource CustomTextboxStyle}"
+                <PasswordBox x:Name="PasswordTextBox"
+                         Style="{StaticResource CustomPasswordBoxStyle}"
                          Grid.Column="1"
                          Grid.Row="1"
-                         Text="{Binding Password}"
+                         Password="{Binding Password}"
                          />
                 <TextBlock Text="Permission"
                            Style="{StaticResource CustomTextblockStyle}"
