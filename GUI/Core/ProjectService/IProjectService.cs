@@ -27,5 +27,7 @@ namespace GUI.Core.ProjectService
         Sprint EndSprint(int projectId, Sprint sprint);
         void AddTask(int userStoryId, string taskTitle);
         void AssignToTask(int memberId, int taskId);
+
+        void UpdateTaskCompletion(int taskId);
     }
 }

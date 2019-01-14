@@ -138,6 +138,24 @@ namespace DAO
             }
         }
 
+        public void UpdateTaskCompletion(int taskId, bool completion)
+        {
+            using (var context = new ProjectManagementContext())
+            {
+                var task = context.Tasks.Find(taskId);
+                task.IsDone = completion;
+                context.SaveChanges();
+            }
+        }
+
+        public Task GetTaskById(int taskId)
+        {
+            using (var context = new ProjectManagementContext())
+            {
+                return context.Tasks.Find(taskId);
+            }
+        }
+
         public Member GetMemberById(int memberId)
         {
             using (var context = new ProjectManagementContext())

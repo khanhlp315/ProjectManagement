@@ -9,7 +9,8 @@ namespace DTO
     public enum UserStoryState
     {
         BACKLOG, 
-        IN_PROGRESS,
-        RESOLVED
+        ON_SPRINT,
+        RESOLVED,
+        IN_PROGRESS
     }
 }
