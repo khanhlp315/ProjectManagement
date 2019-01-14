@@ -546,9 +546,9 @@ namespace GUI.ViewModels
             }
             else if (CurrentSprint.State == SprintState.ACTIVE)
             {
-                var sprint = _projectService.EndSprint(SelectedProject.Id, CurrentSprint);
-                SelectedProject.Sprints.Add(sprint);
-                CurrentSprint = sprint;
+                _projectService.EndSprint(SelectedProject.Id, CurrentSprint);
+                SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
+                CurrentSprint = SelectedProject.Sprints.OrderByDescending(p => p.Order).First();
             }
         }
 
