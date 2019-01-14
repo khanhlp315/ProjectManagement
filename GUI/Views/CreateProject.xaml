@@ -10,17 +10,28 @@
              xmlns:dto="clr-namespace:DTO;assembly=DTO"
              mc:Ignorable="d"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             prism:ViewModelLocator.AutoWireViewModel="True" VerticalAlignment="Center" Height="400">
+             prism:ViewModelLocator.AutoWireViewModel="True" VerticalAlignment="Center">
     <i:Interaction.Triggers>
         <interactionRequest:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
             <interactionRequest:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True" WindowStartupLocation="CenterScreen">
             </interactionRequest:PopupWindowAction>
         </interactionRequest:InteractionRequestTrigger>
     </i:Interaction.Triggers>
-    <Grid Width="499" Height="400">
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Height="320" Margin="140,50,139,50" IsHitTestVisible="False">
+    <Grid Margin="0" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="{StaticResource ThemeColorBrush}">
+            <Label 
+            Content="Create project" HorizontalAlignment="Center" Foreground="{DynamicResource MainWhiteFontColor}" FontFamily="Segoe UI Semilight" FontSize="26" Padding="10,20"></Label>
+        </Grid>
 
-            <Label Content="Create project" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26" Padding="5,10"></Label>
+        <StackPanel 
+          Grid.Row="1"  
+          Orientation="Vertical" HorizontalAlignment="Center" IsHitTestVisible="False" Margin="20,0,20,20">
+
+
 
             <Grid>
                 <Label Content="Project Key" Margin="0,5"/>
