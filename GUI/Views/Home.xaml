@@ -33,15 +33,13 @@
             <BeginStoryboard Storyboard="{StaticResource CloseMenu}"/>
         </EventTrigger>
     </UserControl.Triggers>-->
-    <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+    <materialDesign:DrawerHost x:Name="drawer" IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
         <materialDesign:DrawerHost.LeftDrawerContent>
             <StackPanel>
 
-                <Button  Content="Projects"  Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding NavigateToProjectsCommand}"/>
-                <Button  Content="Users" Style="{DynamicResource MaterialDesignFlatButton}"   VerticalAlignment="Center" Command="{Binding NavigateToUsersCommand}"/>
-                <Button  Content="Tasks" Style="{DynamicResource MaterialDesignFlatButton}"   VerticalAlignment="Center" Command="{Binding NavigateToTasksCommand}"/>
-
-                <Button  Content="Report" Style="{DynamicResource MaterialDesignFlatButton}"   VerticalAlignment="Center" Command="{Binding NavigateToReportCommand}"/>
+                <Button  Content="Projects"  Style="{DynamicResource MaterialDesignFlatButton}" Click="CloseMenu" Command="{Binding NavigateToProjectsCommand}"/>
+                <Button  Content="Users" Style="{DynamicResource MaterialDesignFlatButton}"   VerticalAlignment="Center" Click="CloseMenu" Command="{Binding NavigateToUsersCommand}"/>
+                <Button  Content="Report" Style="{DynamicResource MaterialDesignFlatButton}"   VerticalAlignment="Center" Click="CloseMenu" Command="{Binding NavigateToReportCommand}"/>
 
 
                 <!--<Button x:Name="ButtonOpenMenu" Height="60" Width="60" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#FF5C99D6"  Background="{StaticResource ThemeColorBrush}" BorderBrush="{x:Null}" Click="OpenMenu">

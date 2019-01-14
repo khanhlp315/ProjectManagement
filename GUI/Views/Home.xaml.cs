@@ -29,6 +29,8 @@ namespace GUI.Views
         {
             //ButtonCloseMenu.Visibility = Visibility.Collapsed;
             //ButtonOpenMenu.Visibility = Visibility.Visible;
+            drawer.IsLeftDrawerOpen = false;
+            
         }
 
         private void OpenMenu(object sender, RoutedEventArgs e)
