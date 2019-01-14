@@ -33,6 +33,12 @@ namespace GUI.ViewModels
             set;
         }
 
+        public DelegateCommand NavigateToReportCommand
+        {
+            get;
+            set;
+        }
+
         public bool KeepAlive => false;
 
         protected override void RegisterCommands()
@@ -40,6 +46,7 @@ namespace GUI.ViewModels
             LogoutCommand = new DelegateCommand(Logout);
             NavigateToProjectsCommand = new DelegateCommand(NavigateToProjects);
             NavigateToUsersCommand = new DelegateCommand(NavigateToUsers);
+            NavigateToReportCommand = new DelegateCommand(NavigateToReport);
 
         }
 
@@ -51,6 +58,11 @@ namespace GUI.ViewModels
         private void NavigateToProjects()
         {
             _regionManager.RequestNavigate("ContentRegion", "Projects");
+        }
+
+        private void NavigateToReport()
+        {
+            _regionManager.RequestNavigate("ContentRegion", "Report");
         }
 
         private void Logout()

@@ -28,6 +28,7 @@ namespace GUI.Modules
             _container.RegisterTypeForNavigation<Home>();
             _container.RegisterTypeForNavigation<Projects>();
             _container.RegisterTypeForNavigation<Users>();
+            _container.RegisterTypeForNavigation<Report>();
             _container.RegisterTypeForNavigation<CreateProject>();
             _container.RegisterTypeForNavigation<CreateUser>();
             _container.RegisterTypeForNavigation<EditUser>();
