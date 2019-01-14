@@ -28,7 +28,7 @@ namespace GUI.ViewModels
             }
         }
 
-        public DelegateCommand<int?> UpdateTaskCommand
+        public DelegateCommand<int?> UpdateTaskCompletionCommand
         {
             get;
             set;
@@ -70,10 +70,10 @@ namespace GUI.ViewModels
         protected override void RegisterCommands()
         {
             base.RegisterCommands();
-            UpdateTaskCommand = new DelegateCommand<int?>(UpdateTask);
+            UpdateTaskCompletionCommand = new DelegateCommand<int?>(UpdateTaskCompletion);
         }
 
-        private void UpdateTask(int? taskId)
+        private void UpdateTaskCompletion(int? taskId)
         {
             try
             {

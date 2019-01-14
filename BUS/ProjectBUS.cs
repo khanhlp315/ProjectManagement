@@ -190,13 +190,20 @@ namespace BUS
                     {
                         if(userStory.State != UserStoryState.IN_PROGRESS)
                         {
+                            userStoriesToRemove.Add(userStory);
+
                             continue;
                         }
                         bool userStoryHasTask = false;
                         var tasksToRemove = new List<Task>();
                         foreach(var task in userStory.Tasks)
                         {
-                            if((!task.IsDone) && task.AssignedMember.Id == member.Id)
+                            if(task.AssignedMember == null)
+                            {
+                                tasksToRemove.Add(task);
+                                continue;
+                            }
+                            if ((!task.IsDone) && task.AssignedMember.Id == member.Id)
                             {
                                 userStoryHasTask = true;
                             }
