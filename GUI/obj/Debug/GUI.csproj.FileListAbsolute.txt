@@ -68,6 +68,25 @@ C:\Users\E7470\Documents\ProjectManagement\GUI\obj\Debug\Views\EditUser.g.cs
 C:\Users\E7470\Documents\ProjectManagement\GUI\obj\Debug\Views\EditUser.baml
 C:\Users\E7470\Documents\ProjectManagement\GUI\obj\Debug\Views\ProjectDetails.g.cs
 C:\Users\E7470\Documents\ProjectManagement\GUI\obj\Debug\Views\ProjectDetails.baml
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\GUI.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\MainWindow.baml
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Styles\Blue.baml
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Styles\CoreResourceDictionary.baml
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Styles\DataWindowResourceDictionary.baml
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Styles\UserControlResourceDictionary.baml
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\MainWindow.g.cs
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\CreateProject.g.cs
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\CreateUser.g.cs
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\EditUser.g.cs
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\Home.g.cs
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\Login.g.cs
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\ProjectDetails.g.cs
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\Projects.g.cs
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\Users.g.cs
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\App.g.cs
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\GUI_MarkupCompile.cache
+C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\GUI_MarkupCompile.lref
 C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\bin\Debug\GUI.exe.config
 C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\bin\Debug\GUI.exe
 C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\bin\Debug\GUI.pdb
@@ -103,25 +122,6 @@ C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\bin\D
 C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\bin\Debug\Prism.Wpf.xml
 C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\bin\Debug\DAO.pdb
 C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\bin\Debug\DAO.dll.config
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\GUI.csprojResolveAssemblyReference.cache
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\MainWindow.baml
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Styles\Blue.baml
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Styles\CoreResourceDictionary.baml
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Styles\DataWindowResourceDictionary.baml
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Styles\UserControlResourceDictionary.baml
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\MainWindow.g.cs
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\CreateProject.g.cs
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\CreateUser.g.cs
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\EditUser.g.cs
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\Home.g.cs
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\Login.g.cs
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\ProjectDetails.g.cs
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\Projects.g.cs
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\Users.g.cs
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\App.g.cs
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\GeneratedInternalTypeHelper.g.cs
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\GUI_MarkupCompile.cache
-C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\GUI_MarkupCompile.lref
 C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\App.baml
 C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\CreateProject.baml
 C:\Users\Admin\Documents\Visual Studio 2017\Projects\ProjectManagement\GUI\obj\Debug\Views\CreateUser.baml

@@ -12,11 +12,23 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.CheckBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Flipper.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Popupbox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
+                <WrapPanel Orientation="Horizontal" Margin="0,0,0,0"/>
+            </ItemsPanelTemplate>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        </ResourceDictionary>
     </UserControl.Resources>
     <i:Interaction.Triggers>
     </i:Interaction.Triggers>
-    <ScrollViewer VerticalScrollBarVisibility="Auto" Height="Auto">
+    <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Height="Auto">
         <ItemsControl ItemsSource="{Binding Projects}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -83,5 +95,125 @@
                 </utils:ProjectTemplateSelector>
             </ItemsControl.ItemTemplateSelector>
         </ItemsControl>
-    </ScrollViewer>
+    </ScrollViewer>-->
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="Auto">
+            <ItemsControl ItemsPanel="{StaticResource ItemsPanelTemplate1}" ItemsSource="{Binding Projects}">
+                <!--<ItemsControl.ItemTemplate>
+               
+
+            </ItemsControl.ItemTemplate>-->
+                <ItemsControl.ItemTemplateSelector>
+                    <utils:ProjectTemplateSelector>
+                        <utils:ProjectTemplateSelector.ProjectTemplate>
+                            <DataTemplate>
+
+                                <Grid>
+                                    <Button Background="Transparent" BorderBrush="Transparent" Style="{StaticResource  UserControlButtonStyle}" Height="{Binding Path=ActualHeight,ElementName=cardFlipper}" Width="{Binding Path=ActualWidth,ElementName=cardFlipper}" CommandParameter="{Binding Id}" Command="{Binding Path=DataContext.ViewProjectCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}">
+                                        <materialDesign:Flipper Margin="0" Padding="0" x:Name="cardFlipper" Height="auto" MinHeight="256" Width="auto" MinWidth="200" Style="{StaticResource MaterialDesignCardFlipper}">
+                                            <materialDesign:Flipper.FrontContent>
+                                                <Grid >
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="160"/>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <materialDesign:ColorZone Mode="PrimaryLight" VerticalAlignment="Stretch">
+                                                        <materialDesign:PackIcon Kind="Work" Height="128" Width="128" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                    </materialDesign:ColorZone>
+                                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <TextBlock Text="{Binding Key}" FontSize="20" Foreground="White" TextAlignment="Center"/>
+                                                    </StackPanel>
+                                                    <StackPanel Grid.Row="1">
+                                                        <TextBlock Grid.Row="1" Text="Project name: " FontSize="14" Foreground="{StaticResource MainBlackFontColor}" TextAlignment="Center"/>
+                                                        <TextBlock Grid.Row="1" Text="{Binding Name}" FontSize="20" Foreground="{StaticResource ThemeColorBrush}" TextAlignment="Center"/>
+                                                        <Grid Height="20"></Grid>
+                                                        <TextBlock Grid.Row="1" Text="Created by: " FontSize="14" Foreground="{StaticResource MainBlackFontColor}" TextAlignment="Center"/>
+                                                        <TextBlock Grid.Row="1" Text="{Binding CreatedUser.Username, StringFormat='@{0}'}" FontSize="20" Foreground="{StaticResource ThemeColorBrush}" TextAlignment="Center"/>
+
+                                                    </StackPanel>
+                                                </Grid>
+                                            </materialDesign:Flipper.FrontContent>
+                                            <materialDesign:Flipper.BackContent>
+                                                <Grid Height="256" Width="200">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <materialDesign:ColorZone Mode="Accent" Padding="6">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Button Style="{StaticResource MaterialDesignToolForegroundButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" HorizontalAlignment="Left">
+                                                                <materialDesign:PackIcon Kind="ArrowLeft" HorizontalAlignment="Right"/>
+                                                            </Button>
+                                                            <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">
+          EDIT USER
+                                                            </TextBlock>
+                                                        </StackPanel>
+                                                    </materialDesign:ColorZone>
+                                                    <Grid Grid.Row="1" Margin="0 6 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="172">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition/>
+                                                            <RowDefinition/>
+                                                            <RowDefinition/>
+                                                            <RowDefinition/>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBox materialDesign:HintAssist.Hint="First name" materialDesign:HintAssist.IsFloating="True" Margin="0 12 0 0">
+                                                            James
+                                                        </TextBox>
+                                                        <TextBox Grid.Row="1" materialDesign:HintAssist.Hint="Last name" materialDesign:HintAssist.IsFloating="True" Margin="0 12 0 0">
+                                                            Willock
+                                                        </TextBox>
+                                                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Right">
+                                                            <TextBlock VerticalAlignment="Center">
+          Email Contact
+                                                            </TextBlock>
+                                                            <ToggleButton Margin="8 0 0 0"/>
+                                                        </StackPanel>
+                                                        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Right">
+                                                            <TextBlock VerticalAlignment="Center">
+          Telephone Contact
+                                                            </TextBlock>
+                                                            <ToggleButton Margin="8 0 0 0"/>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </Grid>
+                                            </materialDesign:Flipper.BackContent>
+                                        </materialDesign:Flipper>
+                                    </Button>
+                                </Grid>
+                                <!--</Button>-->
+
+                            </DataTemplate>
+
+                        </utils:ProjectTemplateSelector.ProjectTemplate>
+                        <utils:ProjectTemplateSelector.AddTemplate>
+                            <DataTemplate>
+                                <Grid>
+
+                                    <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}" >
+                                        <materialDesign:Flipper.FrontContent>
+                                            <Grid MinHeight="270"  MinWidth="200">
+                                                <!--<Grid.RowDefinitions>
+                                                    <RowDefinition Height="160"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>-->
+                                                <materialDesign:ColorZone Mode="PrimaryLight" VerticalAlignment="Stretch">
+                                                    <materialDesign:PackIcon Kind="Work" Height="128" Width="128" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                </materialDesign:ColorZone>
+                                                <Button Command="{Binding DataContext.ShowCreateProjectCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" >
+                                                    <TextBlock Text="Add new project " FontSize="14" Foreground="{StaticResource  MainWhiteFontColor}" TextAlignment="Center"/>
+                                                </Button>
+                                            </Grid>
+                                        </materialDesign:Flipper.FrontContent>
+                                    </materialDesign:Flipper>
+
+                                </Grid>
+                            </DataTemplate>
+                        </utils:ProjectTemplateSelector.AddTemplate>
+                    </utils:ProjectTemplateSelector>
+                </ItemsControl.ItemTemplateSelector>
+            </ItemsControl>
+
+
+        </ScrollViewer>
+    </Grid>
 </UserControl>

@@ -27,14 +27,14 @@ namespace GUI.Views
 
         private void CloseMenu(object sender, RoutedEventArgs e)
         {
-            ButtonCloseMenu.Visibility = Visibility.Collapsed;
-            ButtonOpenMenu.Visibility = Visibility.Visible;
+            //ButtonCloseMenu.Visibility = Visibility.Collapsed;
+            //ButtonOpenMenu.Visibility = Visibility.Visible;
         }
 
         private void OpenMenu(object sender, RoutedEventArgs e)
         {
-            ButtonCloseMenu.Visibility = Visibility.Visible;
-            ButtonOpenMenu.Visibility = Visibility.Collapsed;
+            //ButtonCloseMenu.Visibility = Visibility.Visible;
+            //ButtonOpenMenu.Visibility = Visibility.Collapsed;
         }
     }
 }

@@ -25,20 +25,55 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </UserControl.Resources>
-    <UserControl.Triggers>
+    <!--<UserControl.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpenMenu">
             <BeginStoryboard Storyboard="{StaticResource OpenMenu}"/>
         </EventTrigger>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonCloseMenu">
             <BeginStoryboard Storyboard="{StaticResource CloseMenu}"/>
         </EventTrigger>
-    </UserControl.Triggers>
-    <Grid VerticalAlignment="Stretch">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid x:Name="GridMenu" Grid.Column="0" Width="70" Background="{StaticResource ThemeColorBrush}" HorizontalAlignment="Left">
+    </UserControl.Triggers>-->
+    <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+        <materialDesign:DrawerHost.LeftDrawerContent>
+            <StackPanel>
+
+                <Button  Content="Projects"  Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding NavigateToProjectsCommand}"/>
+                <Button  Style="{DynamicResource MaterialDesignFlatButton}"  Content="Users" VerticalAlignment="Center" Command="{Binding NavigateToUsersCommand}"/>
+
+
+
+                <!--<Button x:Name="ButtonOpenMenu" Height="60" Width="60" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#FF5C99D6"  Background="{StaticResource ThemeColorBrush}" BorderBrush="{x:Null}" Click="OpenMenu">
+                    <materialDesign:PackIcon Kind="Menu" Width="25" Height="25"/>
+                </Button>
+                <Button x:Name="ButtonCloseMenu" Visibility="Collapsed" Height="60" Width="60" Margin="5" HorizontalAlignment="Right" Foreground="#FF5C99D6"  VerticalAlignment="Top"  Background="{StaticResource ThemeColorBrush}" BorderBrush="{x:Null}" Click="CloseMenu">
+                    <materialDesign:PackIcon Kind="ArrowLeft" Width="25" Height="25"/>
+                </Button>-->
+            </StackPanel>
+        </materialDesign:DrawerHost.LeftDrawerContent>
+        <Grid VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+            </Grid.RowDefinitions>
+        <Grid x:Name="GridMenu" Grid.Row="0">
+                <materialDesign:ColorZone  Mode="Inverted" Padding="10">
+                    <DockPanel>
+                        <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges">
+                            <StackPanel>
+                                <!--<Button Content="User Management" Command="{Binding UserManagementCommand}"/>-->
+                                <Button Content="Logout" Command="{Binding LogoutCommand}"/>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleButton x:Name="MenuToggleButton" IsChecked="False" Style="{DynamicResource MaterialDesignHamburgerToggleButton}" VerticalAlignment="Center"/>
+                            <TextBlock VerticalAlignment="Center" Margin="16 0 0 0">
+      Project Manager
+                            </TextBlock>
+                        </StackPanel>
+                    </DockPanel>
+                </materialDesign:ColorZone>
+            </Grid>   
+        <!--<Grid x:Name="GridMenu" Grid.Column="0" Width="70" Background="{StaticResource ThemeColorBrush}" HorizontalAlignment="Left">
             <StackPanel>
                 <Grid Height="70" RenderTransformOrigin="0.5,0.5">
                     <Grid.RenderTransform>
@@ -75,13 +110,13 @@
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
-        </Grid>
-        <Grid Grid.Column="1" Background="White">
-            <Grid.RowDefinitions>
+        </Grid>-->
+        <Grid Grid.Row="1" Background="White">
+            <!--<Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Background="{StaticResource ThemeColorBrush}">
+            </Grid.RowDefinitions>-->
+            <!--<Grid Grid.Row="0" Background="{StaticResource ThemeColorBrush}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="150"></ColumnDefinition>
@@ -91,9 +126,11 @@
                         <Button Foreground="#FF5C99D6" Content="Logout" Command="{Binding LogoutCommand}"/>
                     </StackPanel>
                 </materialDesign:PopupBox>
-            </Grid>
-            <ContentControl Grid.Row="1" prism:RegionManager.RegionName="ContentRegion" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            </Grid>-->
+            <ContentControl  prism:RegionManager.RegionName="ContentRegion" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
         </Grid>
     </Grid>
+    </materialDesign:DrawerHost>
+    
 </UserControl>
