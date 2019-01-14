@@ -10,7 +10,7 @@
         ResizeMode="NoResize"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="Agile Project Management">
+        Title="Agile Project Management" WindowState="Maximized">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>

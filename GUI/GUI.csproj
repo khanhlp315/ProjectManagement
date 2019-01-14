@@ -108,13 +108,16 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Delegates.cs" />
+    <Compile Include="Utils\DraggableAndDroppableItemsControl.cs" />
     <Compile Include="Utils\DraggableItemsControl.cs" />
     <Compile Include="Utils\DropEventArgs.cs" />
     <Compile Include="Utils\DropEventArgsToDataConverter.cs" />
     <Compile Include="Utils\DroppableItemsControl.cs" />
+    <Compile Include="Utils\DroppableLabel.cs" />
     <Compile Include="Utils\EnumerationExtension.cs" />
     <Compile Include="Utils\EventCommandExecuter.cs" />
     <Compile Include="Utils\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="Utils\MemberToUsernameConverter.cs" />
     <Compile Include="Utils\PasswordHelper.cs" />
     <Compile Include="Utils\ProjectTemplateSelector.cs" />
     <Compile Include="Utils\SprintStateToSprintTextConverter.cs" />

@@ -54,10 +54,9 @@ namespace GUI.ViewModels
 
         private void CreateProject()
         {
-            Project project = null;
             try
             {
-                project = _createProject.CreateProject(_store.GetCurrentUser().Id, ProjectKey, ProjectName);
+                _createProject.CreateProject(_store.GetCurrentUser().Id, ProjectKey, ProjectName);
                 _regionManager.RequestNavigate("ContentRegion", "Projects");
                 ProjectKey = "";
                 ProjectName = "";

@@ -47,7 +47,6 @@ namespace BUS
             return user;
         }
 
-
         public void EditUser(User user)
         {
             if (!Regex.IsMatch(user.Username, "[A-Za-z0-9]{1,10}"))
@@ -71,6 +70,11 @@ namespace BUS
         public void DeleteUser(int userId)
         {
             _userDAO.DeleteUser(userId);
+        }
+
+        public User GetUserFromMember(int memberId)
+        {
+            return _userDAO.GetUserByMemberId(memberId);
         }
     }
 }

@@ -25,18 +25,27 @@ namespace GUI.ViewModels
         private User _addingUser;
         private int _changingMemberId;
         private int _userStoryEpicId;
+        private int _taskUserStoryId;
+        private int _assigningTaskId;
 
         private bool _selectingRole;
         private bool _changingRole;
         private bool _addingEpic;
         private bool _addingUserStory;
+        private bool _addingTask;
+        private bool _startingSprint;
+        private bool _assigningMember;
 
         private string _epicTitle;
         private string _epicDescription;
 
+        private string _taskTitle;
+
         private string _userStoryDescription;
         private string _userStoryTitle;
         private int _userStoryStoryPoints;
+
+        private Member _assignedMember;
 
         private bool _isProjectStarted;
 
@@ -103,6 +112,17 @@ namespace GUI.ViewModels
             set
             {
                 SetProperty(ref _selectedProject, value);
+                foreach (var epic in SelectedProject.Epics)
+                {
+                    for (int i = 0; i < epic.UserStories.Count; ++i)
+                    {
+                        if (epic.UserStories[i].State != UserStoryState.BACKLOG)
+                        {
+                            epic.UserStories.Remove(epic.UserStories[i]);
+                            i--;
+                        }
+                    }
+                }
             }
         }
 
@@ -176,6 +196,30 @@ namespace GUI.ViewModels
             {
                 SetProperty(ref _userStoryStoryPoints, value);
 
+            }
+        }
+
+        public string TaskTitle
+        {
+            get
+            {
+                return _taskTitle;
+            }
+            set
+            {
+                SetProperty(ref _taskTitle, value);
+            }
+        }
+
+        public Member AssignedMember
+        {
+            get
+            {
+                return _assignedMember;
+            }
+            set
+            {
+                SetProperty(ref _assignedMember, value);
             }
         }
 
@@ -299,6 +343,42 @@ namespace GUI.ViewModels
             set;
         }
 
+        public DelegateCommand<int?> ShowAddTaskCommand
+        {
+            get;
+            set;
+        }
+
+        public DelegateCommand AddTaskCommand
+        {
+            get;
+            set;
+        }
+
+        public DelegateCommand CancelAddTaskCommand
+        {
+            get;
+            set;
+        }
+
+        public DelegateCommand<int?> ShowAssignMemberCommand
+        {
+            get;
+            set;
+        }
+
+        public DelegateCommand AssignMemberCommand
+        {
+            get;
+            set;
+        }
+
+        public DelegateCommand CancelAssignMemberCommand
+        {
+            get;
+            set;
+        }
+
         public bool SelectingRole
         {
             get
@@ -347,6 +427,42 @@ namespace GUI.ViewModels
             }
         }
 
+        public bool AddingTask
+        {
+            get
+            {
+                return _addingTask;
+            }
+            set
+            {
+                SetProperty(ref _addingTask, value);
+            }
+        }
+
+        public bool StartingSprint
+        {
+            get
+            {
+                return _startingSprint;
+            }
+            set
+            {
+                SetProperty(ref _startingSprint, value);
+            }
+        }
+
+        public bool AssigningMember
+        {
+            get
+            {
+                return _assigningMember;
+            }
+            set
+            {
+                SetProperty(ref _assigningMember, value);
+            }
+        }
+
         protected override void RegisterCommands()
         {
             ShowAddMemberCommand = new DelegateCommand<User>(ShowAddMember);
@@ -367,6 +483,49 @@ namespace GUI.ViewModels
             StartProjectCommand = new DelegateCommand(StartProject);
             AddUserStoryToSprintCommand = new DelegateCommand<UserStory>(AddToSprint);
             ChangeSprintStateCommand = new DelegateCommand(ChangeSprintState);
+            ShowAddTaskCommand = new DelegateCommand<int?>(ShowAddTask);
+            AddTaskCommand = new DelegateCommand(AddTask);
+            CancelAddTaskCommand = new DelegateCommand(CancelAddTask);
+            ShowAssignMemberCommand = new DelegateCommand<int?>(ShowAssignMember);
+            AssignMemberCommand = new DelegateCommand(AssignMember);
+            CancelAssignMemberCommand = new DelegateCommand(CancelAssignMember);
+        }
+
+        private void CancelAssignMember()
+        {
+            AssigningMember = false;
+        }
+
+        private void ShowAssignMember(int? taskId)
+        {
+            AssignedMember = SelectedProject.Members[0];
+            AssigningMember = true;
+            _assigningTaskId = (int)taskId;
+        }
+
+        private void CancelAddTask()
+        {
+            AddingTask = false;
+        }
+
+        private void AddTask()
+        {
+            try
+            {
+                _projectService.AddTask(_taskUserStoryId, TaskTitle);
+                SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
+                AddingTask = false;
+            }
+            catch(CheckedException e)
+            {
+                ShowError("Error", e.Message);
+            }
+        }
+
+        private void ShowAddTask(int? userStoryId)
+        {
+            _taskUserStoryId = (int)userStoryId;
+            AddingTask = true;
         }
 
         private void ChangeSprintState()
@@ -550,6 +709,21 @@ namespace GUI.ViewModels
         {
             _addingUser = data;
             SelectingRole = true;
+        }
+
+        private void AssignMember()
+        {
+            try
+            {
+                _projectService.AssignToTask(_assignedMember.Id, _assigningTaskId);
+                SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
+                CurrentSprint = SelectedProject.Sprints.OrderByDescending(p => p.Order).First();
+                AssigningMember = false;
+            }
+            catch(Exception e)
+            {
+                ShowError("Error", e.Message);
+            }
         }
 
         private IProjectService _projectService;
