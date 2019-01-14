@@ -55,6 +55,7 @@ namespace GUI.ViewModels
         {
             EditUserCommand = new DelegateCommand(EditUser);
             DeleteUserCommand = new DelegateCommand(DeleteUser);
+            BackCommand = new DelegateCommand(Back);
         }
 
         public DelegateCommand EditUserCommand
@@ -64,6 +65,12 @@ namespace GUI.ViewModels
         }
 
         public DelegateCommand DeleteUserCommand
+        {
+            get;
+            set;
+        }
+
+        public DelegateCommand BackCommand
         {
             get;
             set;
@@ -93,6 +100,11 @@ namespace GUI.ViewModels
             {
                 ShowError("Error", ex.Message);
             }
+        }
+
+        private void Back()
+        {
+            _regionManager.RequestNavigate("ContentRegion", "Users");
         }
     }
 }

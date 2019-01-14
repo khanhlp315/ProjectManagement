@@ -81,9 +81,21 @@ namespace GUI.ViewModels
         protected override void RegisterCommands()
         {
             CreateUserCommand = new DelegateCommand(CreateUser);
+            BackCommand = new DelegateCommand(Back);
+        }
+
+        private void Back()
+        {
+            _regionManager.RequestNavigate("ContentRegion", "Users");
         }
 
         public DelegateCommand CreateUserCommand
+        {
+            get;
+            set;
+        }
+
+        public DelegateCommand BackCommand
         {
             get;
             set;

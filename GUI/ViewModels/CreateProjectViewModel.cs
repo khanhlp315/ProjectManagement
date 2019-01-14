@@ -70,9 +70,21 @@ namespace GUI.ViewModels
         protected override void RegisterCommands()
         {
             CreateProjectCommand = new DelegateCommand(CreateProject);
+            BackCommand = new DelegateCommand(Back);
+        }
+
+        private void Back()
+        {
+            _regionManager.RequestNavigate("ContentRegion", "Projects");
         }
 
         public DelegateCommand CreateProjectCommand
+        {
+            get;
+            set;
+        }
+
+        public DelegateCommand BackCommand
         {
             get;
             set;
