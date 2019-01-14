@@ -37,7 +37,6 @@ namespace GUI.Views
         {
             //ButtonCloseMenu.Visibility = Visibility.Visible;
             //ButtonOpenMenu.Visibility = Visibility.Collapsed;
-            drawer.Visibility = Visibility.Collapsed;
         }
     }
 }
