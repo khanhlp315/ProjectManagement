@@ -39,21 +39,16 @@
                 <ColumnDefinition  />
             </Grid.ColumnDefinitions>
             <TextBlock Text="From"
-                       Style="{StaticResource CustomTextblockStyle}"   Margin="0,0,0,0" />
+                      Margin="0,0,0,0" />
             <DatePicker x:Name="FromMonthPicker"
                         Grid.Column="1"
-                        Style="{StaticResource CustomDatePickerStyle}"
                         FirstDayOfWeek="Monday"
-                        SelectedDate="{Binding Month}"
                         FontSize="16"  Margin="0,0,0,0" />
             <TextBlock Grid.Column="2"
-                       Text="To"
-                       Style="{StaticResource CustomTextblockStyle}"  />
+                       Text="To"  />
             <DatePicker x:Name="ToMonthPicker"
                         Grid.Column="3"
-                        Style="{StaticResource CustomDatePickerStyle}"
                         FirstDayOfWeek="Monday"
-                        SelectedDate="{Binding Month}"
                         FontSize="16"  Margin="0,0,0,0" />
             <!--<TextBox Grid.Column="3"
                      Style="{StaticResource CustomTextboxStyle}"
@@ -65,36 +60,35 @@
                       Grid.Row="3"
                       Grid.ColumnSpan="4"
                       Background="#D8F0F0F0"
-                      RowHeight="30"
-                      ColumnHeaderHeight="40"
-                      Style="{DynamicResource CustomDataGridStyle}"
+                      RowHeight="40"
+                      ColumnHeaderHeight="50"
                       IsReadOnly="True"
                       CanUserAddRows="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Converter={StaticResource DGRowNumberOrder}, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
+                    <DataGridTextColumn
                                         CanUserSort="False"
                                         CanUserReorder="False"
                                         Header="No."
                                         IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding Agent.Name}"
+                    <DataGridTextColumn 
                                         Header="Project Name"
                                         IsReadOnly="True" />
-                    <DataGridTextColumn Binding="{Binding LastDebt, StringFormat=C, ConverterCulture=vi-VN}"
+                    <DataGridTextColumn 
                                         Header="Owner"
                                         IsReadOnly="True" />
-                    <DataGridTextColumn Binding="{Binding CurrentDebt, StringFormat=C, ConverterCulture=vi-VN}"
+                    <DataGridTextColumn 
                                         Header="Sum Of Members"
                                         IsReadOnly="True" />
-                    <DataGridTextColumn Binding="{Binding FinalDebt, StringFormat=C, ConverterCulture=vi-VN}"
+                    <DataGridTextColumn 
                                         Header="Current Sprint"
                                         IsReadOnly="True" />
-                    <DataGridTextColumn Binding="{Binding FinalDebt, StringFormat=C, ConverterCulture=vi-VN}"
+                    <DataGridTextColumn
                                         Header="Epic Remain"
                                         IsReadOnly="True" />
-                    <DataGridTextColumn Binding="{Binding FinalDebt, StringFormat=C, ConverterCulture=vi-VN}"
+                    <DataGridTextColumn 
                                         Header="Task Remain"
                                         IsReadOnly="True" />
-                    <DataGridTextColumn Binding="{Binding FinalDebt, StringFormat=C, ConverterCulture=vi-VN}"
+                    <DataGridTextColumn 
                                         Header="Task Done"
                                         IsReadOnly="True" />
 
@@ -105,7 +99,6 @@
                         >
 
                 <Button x:Name="ExportButton"
-                        Style="{StaticResource ToolbarButtonStyle}"
                         Tag="&#xE143;"
                         Content="Export" />
             </StackPanel>
