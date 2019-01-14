@@ -13,3 +13,18 @@ C:\Users\E7470\Documents\ProjectManagement\DAO\obj\Debug\DAO.csproj.CopyComplete
 C:\Users\E7470\Documents\ProjectManagement\DAO\obj\Debug\DAO.dll
 C:\Users\E7470\Documents\ProjectManagement\DAO\obj\Debug\DAO.pdb
 C:\Users\E7470\Documents\ProjectManagement\DAO\bin\Debug\DTO.dll.config
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\DAO\bin\Debug\DAO.dll.config
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\DAO\bin\Debug\DAO.dll
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\DAO\bin\Debug\DAO.pdb
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\DAO\bin\Debug\DTO.dll
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\DAO\bin\Debug\EntityFramework.dll
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\DAO\bin\Debug\EntityFramework.SqlServer.dll
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\DAO\bin\Debug\DTO.pdb
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\DAO\bin\Debug\DTO.dll.config
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\DAO\bin\Debug\EntityFramework.xml
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\DAO\bin\Debug\EntityFramework.SqlServer.xml
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\DAO\obj\Debug\DAO.csprojAssemblyReference.cache
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\DAO\obj\Debug\DAO.csproj.CoreCompileInputs.cache
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\DAO\obj\Debug\DAO.csproj.CopyComplete
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\DAO\obj\Debug\DAO.dll
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\DAO\obj\Debug\DAO.pdb

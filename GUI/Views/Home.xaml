@@ -33,7 +33,7 @@
             <BeginStoryboard Storyboard="{StaticResource CloseMenu}"/>
         </EventTrigger>
     </UserControl.Triggers>
-    <Grid VerticalAlignment="Stretch">
+    <Grid Grid.IsSharedSizeScope="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -49,7 +49,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </Grid.RenderTransform>
-                    <Button x:Name="ButtonOpenMenu" Height="60" Width="60" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#FF5C99D6"  Background="{StaticResource ThemeColorBrush}" BorderBrush="{x:Null}" Click="OpenMenu">
+                    <Button x:Name="ButtonOpenMenu" Height="60" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="#FF5C99D6"  Background="{StaticResource ThemeColorBrush}" BorderBrush="{x:Null}" Click="OpenMenu" Width="65">
                         <materialDesign:PackIcon Kind="Menu" Width="25" Height="25"/>
                     </Button>
                     <Button x:Name="ButtonCloseMenu" Visibility="Collapsed" Height="60" Width="60" Margin="5" HorizontalAlignment="Right" Foreground="#FF5C99D6"  VerticalAlignment="Top"  Background="{StaticResource ThemeColorBrush}" BorderBrush="{x:Null}" Click="CloseMenu">
@@ -92,8 +92,38 @@
                     </StackPanel>
                 </materialDesign:PopupBox>
             </Grid>
-            <ContentControl Grid.Row="1" prism:RegionManager.RegionName="ContentRegion" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
+            <Grid VerticalAlignment="Top" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="QUẢN LÝ&#x0a;DỰ ÁN"
+                   Grid.Column="0"
+                   FontSize="45"
+                   TextAlignment="Right"
+                   FontFamily="Segoe UI Semilight"
+                   Foreground="OrangeRed" Margin="50,90,20,90" />
+                <Border BorderThickness="0,0,1,0"
+                BorderBrush="LightGray"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                Height="300" Margin="0,0,2,0" Width="1" RenderTransformOrigin="0.5,0.5">
+                    <Border.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="-1"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Border.RenderTransform>
+                </Border>
+                <ContentControl Grid.Column="1" prism:RegionManager.RegionName="ContentRegion" Margin="0,0,0,0"/>
+
+            </Grid>
         </Grid>
+
+
+
     </Grid>
 </UserControl>
