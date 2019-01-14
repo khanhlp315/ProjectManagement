@@ -94,7 +94,41 @@
         </ScrollViewer>
     </Grid>-->
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <!--<StackPanel Orientation="Horizontal">-->
+                <!--<materialDesign:PackIcon Kind="Search" Height="auto" Width="auto"/>-->
+                <!--<TextBox ToolTip="Search" BorderBrush="Transparent" Style="{StaticResource CustomTextboxStyle}"></TextBox>-->
+                <TextBox VerticalContentAlignment="Center">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                            <Style.Resources>
+                                <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                    <VisualBrush.Visual>
+                                        <Label Content="Search" Foreground="LightGray" />
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Style.Resources>
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="Text" Value="{x:Null}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter Property="Background" Value="White" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+            <!--</StackPanel>-->
+        </Grid>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Height="Auto">
             <ItemsControl ItemsPanel="{StaticResource ItemsPanelTemplate1}" ItemsSource="{Binding Users}">
                 <!--<ItemsControl.ItemTemplate>
             </ItemsControl.ItemTemplate>-->

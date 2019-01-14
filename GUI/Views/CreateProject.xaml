@@ -39,6 +39,7 @@
         <StackPanel VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     Width="350">
+            <materialDesign:PackIcon Foreground="{StaticResource ThemeColorBrush}" Kind="ArrowBack" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             <Button Style="{StaticResource MenuButtonStyle}"
                     IsEnabled="False"
                     Foreground="OrangeRed"

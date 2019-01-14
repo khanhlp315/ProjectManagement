@@ -38,8 +38,8 @@
             <StackPanel>
 
                 <Button  Content="Projects"  Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding NavigateToProjectsCommand}"/>
-                <Button  Style="{DynamicResource MaterialDesignFlatButton}"  Content="Users" VerticalAlignment="Center" Command="{Binding NavigateToUsersCommand}"/>
-
+                <Button  Content="Users" Style="{DynamicResource MaterialDesignFlatButton}"   VerticalAlignment="Center" Command="{Binding NavigateToUsersCommand}"/>
+                <Button  Content="Report" Style="{DynamicResource MaterialDesignFlatButton}"   VerticalAlignment="Center" Command="{Binding NavigateToReportCommand}"/>
 
 
                 <!--<Button x:Name="ButtonOpenMenu" Height="60" Width="60" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#FF5C99D6"  Background="{StaticResource ThemeColorBrush}" BorderBrush="{x:Null}" Click="OpenMenu">
