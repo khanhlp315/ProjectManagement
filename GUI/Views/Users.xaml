@@ -100,32 +100,32 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <!--<StackPanel Orientation="Horizontal">-->
-                <!--<materialDesign:PackIcon Kind="Search" Height="auto" Width="auto"/>-->
-                <!--<TextBox ToolTip="Search" BorderBrush="Transparent" Style="{StaticResource CustomTextboxStyle}"></TextBox>-->
-                <TextBox VerticalContentAlignment="Center">
-                    <TextBox.Style>
-                        <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-                            <Style.Resources>
-                                <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
-                                    <VisualBrush.Visual>
-                                        <Label Content="Search" Foreground="LightGray" />
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Style.Resources>
-                            <Style.Triggers>
-                                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
-                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                                </Trigger>
-                                <Trigger Property="Text" Value="{x:Null}">
-                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                                </Trigger>
-                                <Trigger Property="IsKeyboardFocused" Value="True">
-                                    <Setter Property="Background" Value="White" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBox.Style>
-                </TextBox>
+            <!--<materialDesign:PackIcon Kind="Search" Height="auto" Width="auto"/>-->
+            <!--<TextBox ToolTip="Search" BorderBrush="Transparent" Style="{StaticResource CustomTextboxStyle}"></TextBox>-->
+            <TextBox VerticalContentAlignment="Center">
+                <TextBox.Style>
+                    <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                        <Style.Resources>
+                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                <VisualBrush.Visual>
+                                    <Label Content="Search" Foreground="LightGray" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Style.Resources>
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                            </Trigger>
+                            <Trigger Property="Text" Value="{x:Null}">
+                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="Background" Value="White" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
             <!--</StackPanel>-->
         </Grid>
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Height="Auto">
@@ -137,8 +137,8 @@
                         <utils:UserTemplateSelector.UserTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <Button Background="Transparent" BorderBrush="Transparent" Style="{StaticResource  UserControlButtonStyle}" Height="{Binding Path=ActualHeight,ElementName=cardFlipper}" Width="{Binding Path=ActualWidth,ElementName=cardFlipper}" IsHitTestVisible="{Binding Path=DataContext.CanEditUser,  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Id}" Command="{Binding Path=DataContext.EditUserCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}">    
-                                    <materialDesign:Flipper x:Name="cardFlipper" Height="auto" MinHeight="256" Width="auto" MinWidth="200" Style="{StaticResource MaterialDesignCardFlipper}">
+                                    <Button Background="Transparent" BorderBrush="Transparent" Style="{StaticResource  UserControlButtonStyle}" Height="{Binding Path=ActualHeight,ElementName=cardFlipper}" Width="{Binding Path=ActualWidth,ElementName=cardFlipper}" IsHitTestVisible="{Binding Path=DataContext.CanEditUser,  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Id}" Command="{Binding Path=DataContext.EditUserCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}">
+                                        <materialDesign:Flipper x:Name="cardFlipper" Height="auto" MinHeight="256" Width="auto" MinWidth="200" Style="{StaticResource MaterialDesignCardFlipper}">
                                             <materialDesign:Flipper.FrontContent>
                                                 <Grid >
                                                     <Grid.RowDefinitions>
@@ -148,8 +148,9 @@
                                                     <materialDesign:ColorZone Mode="PrimaryLight" VerticalAlignment="Stretch">
                                                         <materialDesign:PackIcon Kind="Account" Height="128" Width="128" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                                     </materialDesign:ColorZone>
+                                                    <TextBlock Text="{Binding Username}" FontSize="20" Foreground="White" TextAlignment="Center"/>
                                                     <StackPanel Grid.Row="2">
-                                                        <TextBlock Text="{Binding Username}" FontSize="20" Foreground="White" TextAlignment="Center"/>
+                                                        
                                                         <TextBlock Grid.Row="1" Text="{Binding Permission}" FontSize="20" Foreground="{StaticResource ThemeColorBrush}" TextAlignment="Center"/>
                                                     </StackPanel>
                                                 </Grid>
