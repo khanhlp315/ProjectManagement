@@ -189,12 +189,15 @@
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate>
                                                             <StackPanel>
-                                                                <TextBlock Text="{Binding Title}"/>
-                                                                <CheckBox IsEnabled="False" IsChecked="{Binding IsApproved}"></CheckBox>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <TextBlock Text="{Binding Title}"/>
+                                                                    <CheckBox IsChecked="{Binding IsApproved}"></CheckBox>
+                                                                </StackPanel>
+                                                                
                                                                 <StackPanel Orientation="Horizontal">
                                                                     <TextBlock Text="{Binding AssignedMember, Converter={StaticResource MemberToUsername}}">
                                                                     </TextBlock>
-                                                                    <Button Content="Assign" CommandParameter="{Binding Id}" Command="{Binding DataContext.ShowAssignMemberCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DroppableItemsControl}}"></Button>
+                                                                    <Button Content="Assign" Margin="20" CommandParameter="{Binding Id}" Command="{Binding DataContext.ShowAssignMemberCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DroppableItemsControl}}"></Button>
                                                                 </StackPanel>
                                                             </StackPanel>
                                                         </DataTemplate>
