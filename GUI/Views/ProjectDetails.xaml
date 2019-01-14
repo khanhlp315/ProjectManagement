@@ -17,12 +17,12 @@
         <utils:SprintStateToSprintTextConverter x:Key="SprintStateConverter"/>
         <utils:MemberToUsernameConverter x:Key="MemberToUsername"/>
     </UserControl.Resources>
-    <!--<i:Interaction.Triggers>
+    <i:Interaction.Triggers>
         <interactionRequest:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
             <interactionRequest:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True" WindowStartupLocation="CenterScreen">
             </interactionRequest:PopupWindowAction>
         </interactionRequest:InteractionRequestTrigger>
-    </i:Interaction.Triggers>-->
+    </i:Interaction.Triggers>
     <Grid VerticalAlignment="Stretch">
         <ScrollViewer>
             <Grid>
@@ -152,11 +152,11 @@
                                         </Border>
                                     </DataTemplate>
                                 </utils:DraggableAndDroppableItemsControl.ItemTemplate>
-                                <!--<i:Interaction.Triggers>
+                                <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="DropItem">
                                     <utils:EventCommandExecuter Command="{Binding ShowAddMemberCommand, Mode=OneTime}" EventArgsConverter="{x:Static utils:DropEventArgsToDataConverter.Default}"/>
                                 </i:EventTrigger>
-                            </i:Interaction.Triggers>-->
+                            </i:Interaction.Triggers>
                             </utils:DraggableAndDroppableItemsControl>
                         </Grid>
 
@@ -199,11 +199,11 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </utils:DroppableItemsControl.ItemTemplate>
-                            <!--<i:Interaction.Triggers>
+                            <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="DropItem">
                                     <utils:EventCommandExecuter Command="{Binding AddUserStoryToSprintCommand, Mode=OneTime}" EventArgsConverter="{x:Static utils:DropEventArgsToDataConverter.Default}"/>
                                 </i:EventTrigger>
-                            </i:Interaction.Triggers>-->
+                            </i:Interaction.Triggers>
                         </utils:DroppableItemsControl>
                     </StackPanel>
                     <TextBlock Text="Available User stories" Style="{StaticResource CustomTextblockStyle}"/>
@@ -262,7 +262,7 @@
                 
             </Grid>
         </ScrollViewer>
-        <!--<Grid Visibility="{Binding SelectingRole, Converter={StaticResource BoolToVis}}"  Background="#0F000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid Visibility="{Binding SelectingRole, Converter={StaticResource BoolToVis}}"  Background="#0F000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <StackPanel Background="White" Width="200" Height="200" VerticalAlignment="Center">
                 <TextBlock Text="Select Role" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></TextBlock>
                 <ComboBox Margin="12,4,12,12"  ItemsSource="{Binding Source={utils:Enumeration {x:Type dto:Role}}}"
@@ -378,7 +378,7 @@
                 <Button Content="Add" Command="{Binding AssignMemberCommand}" Margin="10"/>
                 <Button Content="Cancel" Background="Red" Command="{Binding CancelAssignMemberCommand}" Margin="10"/>
             </StackPanel>
-        </Grid>-->
+        </Grid>
 
     </Grid>
 
