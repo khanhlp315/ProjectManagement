@@ -39,6 +39,7 @@
 
                 <Button  Content="Projects"  Style="{DynamicResource MaterialDesignFlatButton}" Click="CloseMenu" Command="{Binding NavigateToProjectsCommand}"/>
                 <Button  Content="Users" Style="{DynamicResource MaterialDesignFlatButton}"   VerticalAlignment="Center" Click="CloseMenu" Command="{Binding NavigateToUsersCommand}"/>
+                <Button  Content="Tasks" Style="{DynamicResource MaterialDesignFlatButton}"   VerticalAlignment="Center" Click="CloseMenu" Command="{Binding NavigateToTasksCommand}"/>
                 <Button  Content="Report" Style="{DynamicResource MaterialDesignFlatButton}"   VerticalAlignment="Center" Click="CloseMenu" Command="{Binding NavigateToReportCommand}"/>
 
 

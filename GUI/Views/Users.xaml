@@ -102,7 +102,7 @@
             <!--<StackPanel Orientation="Horizontal">-->
             <!--<materialDesign:PackIcon Kind="Search" Height="auto" Width="auto"/>-->
             <!--<TextBox ToolTip="Search" BorderBrush="Transparent" Style="{StaticResource CustomTextboxStyle}"></TextBox>-->
-            <TextBox VerticalContentAlignment="Center">
+            <TextBox VerticalContentAlignment="Center" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.Style>
                     <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                         <Style.Resources>
