@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,14 +32,14 @@ namespace DTO
             get;
             set;
         }
-
+         
         public UserStoryState State
         {
             get;
             set;
         }
 
-        public Epic Epic
+        public ObservableCollection<Task> Tasks
         {
             get;
             set;

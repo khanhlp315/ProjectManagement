@@ -9,7 +9,7 @@ namespace GUI.Core.ProjectService
 {
     public interface IProjectService
     {
-        Project CreateProject(int userId, string key, string name);
+        void CreateProject(int userId, string key, string name);
         IEnumerable<Project> GetAllProjectsByMember(int id);
         List<User> GetAllUsersNotInProject(int projectId);
         Member AddUserToProject(User user, Project project, Role role);
@@ -23,5 +23,7 @@ namespace GUI.Core.ProjectService
         void AddUserStoryToSprint(int sprintId, UserStory userStory);
         void StartSprint(Sprint sprint);
         Sprint EndSprint(int projectId, Sprint sprint);
+        void AddTask(int userStoryId, string taskTitle);
+        void AssignToTask(int memberId, int taskId);
     }
 }

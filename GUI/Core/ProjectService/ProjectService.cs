@@ -129,12 +129,11 @@ namespace GUI.Core.ProjectService
             }
         }
 
-        Project IProjectService.CreateProject(int userId, string key, string name)
+        void IProjectService.CreateProject(int userId, string key, string name)
         {
             try
             {
-                var project = _projectBUS.CreateProject(userId, key, name);
-                return project;
+                 _projectBUS.CreateProject(userId, key, name);
             }
             catch (CheckedException e)
             {
@@ -152,6 +151,23 @@ namespace GUI.Core.ProjectService
             {
                 throw e;
             }
+        }
+
+        public void AddTask(int userStoryId, string taskTitle)
+        {
+            try
+            {
+                _projectBUS.AddTask(userStoryId, taskTitle);
+            }
+            catch(CheckedException e)
+            {
+                throw e;
+            }
+        }
+
+        public void AssignToTask(int memberId, int taskId)
+        {
+            _projectBUS.AssignToTask(memberId, taskId);
         }
     }
 }

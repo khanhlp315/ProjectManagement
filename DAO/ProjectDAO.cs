@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using DTO;
 using System.Data.Entity;
 
@@ -15,7 +14,8 @@ namespace DAO
         {
             using (var context = new ProjectManagementContext())
             {
-                return context.Members.Include(member=>member.Project).Include(member => member.User).Where(member=> member.User.Id == userId).Select(member => member.Project).Include(project => project.CreatedUser).Include(project => project.Members).Include(p=>p.Sprints.Select(sprint => sprint.UserStories)).Include(p => p.Sprints).Include(p => p.Epics).Include(p => p.Epics.Select(e=>e.UserStories)).Include(project=> project.Members.Select(member => member.User)).ToList();
+                var projects = context.Projects.Include(p => p.CreatedUser).Include(p => p.Members).Include(p => p.Sprints).Include(p => p.Epics).Include(p => p.Epics.Select(e => e.UserStories)).Include(p => p.Sprints.Select(sprint => sprint.UserStories)).Include(p => p.Members.Select(member => member.User)).Include(p => p.Epics.Select(epic => epic.UserStories.Select(u => u.Tasks.Select(t => t.AssignedMember))));
+                return projects.Where(p => p.Members.Any(m => m.User.Id == userId)).ToList();
             }
         }
 
@@ -27,6 +27,7 @@ namespace DAO
                 var selectedUserStory = context.UserStories.Find(userStory.Id);
                 context.UserStories.Attach(selectedUserStory);
                 selectedUserStory.State = userStory.State;
+                sprint.UserStories.Add(selectedUserStory);
                 context.SaveChanges();
             }
         }
@@ -105,12 +106,24 @@ namespace DAO
             }
         }
 
-        public void ChangeSprintState(int id, SprintState state)
+        public void StartSprint(int id, DateTime date)
         {
             using (var context = new ProjectManagementContext())
             {
                 var sprint = context.Sprints.Find(id);
-                sprint.State = state;
+                sprint.State = SprintState.ACTIVE;
+                sprint.EndDate = date;
+                context.SaveChanges();
+            }
+        }
+
+        public void EndSprint(int id, DateTime date)
+        {
+            using (var context = new ProjectManagementContext())
+            {
+                var sprint = context.Sprints.Find(id);
+                sprint.State = SprintState.FINISHED;
+                sprint.EndDate = date;
                 context.SaveChanges();
             }
         }
@@ -120,6 +133,18 @@ namespace DAO
             using (var context = new ProjectManagementContext())
             {
                 return context.Members.Include(m => m.User).Include(m => m.Project).FirstOrDefault(m => m.Id == memberId);
+            }
+        }
+
+        public void AssignTask(int memberId, int taskId)
+        {
+            using (var context = new ProjectManagementContext())
+            {
+                var task = context.Tasks.Find(taskId);
+                var member = context.Members.Find(memberId);
+                context.Members.Attach(member);
+                task.AssignedMember = member;
+                context.SaveChanges();
             }
         }
 
@@ -133,11 +158,30 @@ namespace DAO
             }
         }
 
+        public UserStory GetUserStoryById(int id)
+        {
+            using (var context = new ProjectManagementContext())
+            {
+                var userStory = context.UserStories.Find(id);
+                return userStory;
+            }
+        }
+
+        public void AddTask(int userStoryId, Task task)
+        {
+            using (var context = new ProjectManagementContext())
+            {
+                var userStory = context.UserStories.Include(u => u.Tasks).FirstOrDefault(u => u.Id == userStoryId);
+                userStory.Tasks.Add(task);
+                context.SaveChanges();
+            }
+        }
+
         public Project GetProjectById(int projectId)
         {
             using (var context = new ProjectManagementContext())
             {
-                return context.Projects.Include(p => p.CreatedUser).Include(p => p.Members).Include(p => p.Sprints).Include(p => p.Epics).Include(p=>p.Epics.Select(e=>e.UserStories)).Include(p => p.Sprints.Select(sprint => sprint.UserStories)).Include(p => p.Epics.Select(e => e.UserStories.Select(u=>u.Epic))).Include(p=> p.Members.Select(member => member.User)).FirstOrDefault(p => p.Id == projectId);
+                return context.Projects.Include(p => p.CreatedUser).Include(p => p.Members).Include(p => p.Sprints).Include(p => p.Epics).Include(p=>p.Epics.Select(e=>e.UserStories)).Include(p => p.Sprints.Select(sprint => sprint.UserStories)).Include(p=> p.Members.Select(member => member.User)).Include(p=>p.Epics.Select(epic => epic.UserStories.Select(u => u.Tasks))).FirstOrDefault(p => p.Id == projectId);
             }
         }
 

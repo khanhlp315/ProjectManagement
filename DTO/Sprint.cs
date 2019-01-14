@@ -24,14 +24,14 @@ namespace DTO
         }
         [DataType(DataType.Date)]
         [Column(TypeName ="date")]
-        public DateTime StartDate
+        public DateTime? StartDate
         {
             get;
             set;
         }
         [DataType(DataType.Date)]
         [Column(TypeName = "date")]
-        public DateTime EndDate
+        public DateTime? EndDate
         {
             get;
             set;
@@ -44,6 +44,12 @@ namespace DTO
         }
 
         public ObservableCollection<UserStory> UserStories
+        {
+            get;
+            set;
+        }
+
+        public Project Project
         {
             get;
             set;

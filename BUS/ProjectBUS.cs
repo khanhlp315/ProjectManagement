@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using BUS.Exceptions;
 using DAO;
 using DTO;
@@ -52,9 +51,9 @@ namespace BUS
             _epicDAO.AddUserStory(epicId, title, description, storyPoints);
         }
 
-        public Project CreateProject(int userId, string key, string name)
+        public void CreateProject(int userId, string key, string name)
         {
-            if(!Regex.IsMatch(key, "[A-Z0-9]{2,5}"))
+            if(!Regex.IsMatch(key, "\\b[A-Z0-9]{2,5}\\b"))
             {
                 throw new CheckedException("Key must contains only uppercase alphabetical letters or digits, and must have at least 2 and at most 5 characters.");
             }
@@ -85,15 +84,12 @@ namespace BUS
             };
             _projectDAO.InsertProject(project);
 
-            project = _projectDAO.GetProjectByKey(key);
-
             Member member = new Member
             {
                 User = user,
                 Role = Role.OWNER
             };
             _projectDAO.InsertMember(project.Id, member);
-            return project;
         }
 
         public Sprint GetNextSprint(int projectId)
@@ -121,20 +117,27 @@ namespace BUS
                 throw new CheckedException($"Sprint has already stảted.");
 
             }
-            _projectDAO.ChangeSprintState(sprint.Id, SprintState.ACTIVE);
+            var date = DateTime.Today;
+            _projectDAO.StartSprint(sprint.Id, date);
         }
 
         public Sprint EndSprint(int projectId, Sprint sprint)
         {
             if(sprint.State != SprintState.ACTIVE)
             {
-                throw new CheckedException($"Sprint has not been stảted.");
+                throw new CheckedException($"Sprint has not been started.");
 
             }
-            _projectDAO.ChangeSprintState(sprint.Id, SprintState.FINISHED);
+            var date = DateTime.Today;
+
+            _projectDAO.EndSprint(sprint.Id, date);
             foreach(var userStory in sprint.UserStories)
             {
-                _projectDAO.UpdateUserStoryState(userStory.Id, UserStoryState.RESOLVED);
+                foreach(var task in userStory.Tasks)
+                {
+
+                    _projectDAO.UpdateUserStoryState(userStory.Id, UserStoryState.RESOLVED);
+                }
             }
 
             var newSprint = new Sprint()
@@ -148,6 +151,26 @@ namespace BUS
             return project.Sprints.OrderByDescending(s => s.Order).First();
         }
 
+        public void AssignToTask(int memberId, int taskId)
+        {
+            _projectDAO.AssignTask(memberId, taskId);
+        }
+
+        public void AddTask(int userStoryId, string taskTitle)
+        {
+            var userStory = _projectDAO.GetUserStoryById(userStoryId);
+            if(userStory.State == UserStoryState.RESOLVED)
+            {
+                throw new CheckedException("Cannot add task to a resolved user story.");
+            }
+            var task = new Task()
+            {
+                Title = taskTitle,
+                IsDone = false
+            };
+            _projectDAO.AddTask(userStoryId, task);
+        }
+
         public void ChangeMemberRole(int changingMemberId, Role selectedRole)
         {
             _projectDAO.UpdateMemberRole(changingMemberId, selectedRole);
@@ -155,7 +178,7 @@ namespace BUS
 
         public void EditProject(int id, string projectName, string projectKey)
         {
-            if (!Regex.IsMatch(projectKey, "[A-Z0-9]{2,5}"))
+            if (!Regex.IsMatch(projectKey, "\\b\\w{2,5}\\b"))
             {
                 throw new CheckedException("Key must contains only uppercase alphabetical letters or digits, and must have at least 2 and at most 5 characters.");
             }
