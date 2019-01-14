@@ -32,7 +32,7 @@ namespace BUS
             {
                 throw new CheckedException($"User story {userStory.Title} is already finished.");
             }
-            userStory.State = UserStoryState.IN_PROGRESS;
+            userStory.State = UserStoryState.ON_SPRINT;
             _projectDAO.AddUserStoryToSprint(sprintId, userStory);
         }
 
@@ -119,6 +119,10 @@ namespace BUS
             }
             var date = DateTime.Today;
             _projectDAO.StartSprint(sprint.Id, date);
+            foreach (var userStory in sprint.UserStories)
+            {
+                _projectDAO.UpdateUserStoryState(userStory.Id, UserStoryState.IN_PROGRESS);
+            }
         }
 
         public Sprint EndSprint(int projectId, Sprint sprint)
@@ -155,6 +159,19 @@ namespace BUS
             return project.Sprints.OrderByDescending(s => s.Order).First();
         }
 
+        public void UpdateTaskCompletion(int taskId)
+        {
+            var task = _projectDAO.GetTaskById(taskId);
+            if(task.IsDone)
+            {
+                _projectDAO.UpdateTaskCompletion(taskId, false);
+            }
+            else
+            {
+                _projectDAO.UpdateTaskCompletion(taskId, true);
+            }
+        }
+
         public List<Project> GetAllUndoneProjects(int userId)
         {
             var projects = _projectDAO.GetAllProjectsByMember(userId);
@@ -171,11 +188,15 @@ namespace BUS
                     var userStoriesToRemove = new List<UserStory>();
                     foreach(var userStory in epic.UserStories)
                     {
+                        if(userStory.State != UserStoryState.IN_PROGRESS)
+                        {
+                            continue;
+                        }
                         bool userStoryHasTask = false;
                         var tasksToRemove = new List<Task>();
                         foreach(var task in userStory.Tasks)
                         {
-                            if(!task.IsDone && task.AssignedMember.Id == member.Id)
+                            if((!task.IsDone) && task.AssignedMember.Id == member.Id)
                             {
                                 userStoryHasTask = true;
                             }

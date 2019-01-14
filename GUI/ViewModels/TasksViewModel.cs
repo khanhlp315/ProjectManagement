@@ -28,7 +28,7 @@ namespace GUI.ViewModels
             }
         }
 
-        public DelegateCommand UpdateTasksCommand
+        public DelegateCommand<int?> UpdateTaskCommand
         {
             get;
             set;
@@ -65,6 +65,26 @@ namespace GUI.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+        }
+
+        protected override void RegisterCommands()
+        {
+            base.RegisterCommands();
+            UpdateTaskCommand = new DelegateCommand<int?>(UpdateTask);
+        }
+
+        private void UpdateTask(int? taskId)
+        {
+            try
+            {
+                _projectService.UpdateTaskCompletion((int)taskId);
+                UndoneProjects.Clear();
+                UndoneProjects.AddRange(_projectService.GetAllUndoneProjects(_store.GetCurrentUser().Id));
+            }
+            catch (CheckedException e)
+            {
+                ShowError("Error", e.Message);
+            }
         }
     }
 }

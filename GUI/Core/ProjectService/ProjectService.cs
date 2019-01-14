@@ -28,6 +28,8 @@ namespace GUI.Core.ProjectService
             _projectBUS.AddUserStoryToSprint(sprintId, userStory);
         }
 
+
+
         public Member AddUserToProject(User user, Project project, Role role)
         {
             try
@@ -173,6 +175,11 @@ namespace GUI.Core.ProjectService
         public List<Project> GetAllUndoneProjects(int userId)
         {
             return _projectBUS.GetAllUndoneProjects(userId);
+        }
+
+        public void UpdateTaskCompletion(int taskId)
+        {
+            _projectBUS.UpdateTaskCompletion(taskId);
         }
     }
 }
