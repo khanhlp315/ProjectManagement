@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BUS", "BUS\BUS.csproj", "{9F4F6E68-CBBB-4F8E-A2B2-43CE29FA2DA1}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ProjectManagement", "ProjectManagement\ProjectManagement.vdproj", "{F53B58EF-B596-427D-87B2-34D761EFA1D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,12 @@ Global
 		{9F4F6E68-CBBB-4F8E-A2B2-43CE29FA2DA1}.Release|x64.Build.0 = Release|x64
 		{9F4F6E68-CBBB-4F8E-A2B2-43CE29FA2DA1}.Release|x86.ActiveCfg = Release|x86
 		{9F4F6E68-CBBB-4F8E-A2B2-43CE29FA2DA1}.Release|x86.Build.0 = Release|x86
+		{F53B58EF-B596-427D-87B2-34D761EFA1D9}.Debug|Any CPU.ActiveCfg = Debug
+		{F53B58EF-B596-427D-87B2-34D761EFA1D9}.Debug|x64.ActiveCfg = Debug
+		{F53B58EF-B596-427D-87B2-34D761EFA1D9}.Debug|x86.ActiveCfg = Debug
+		{F53B58EF-B596-427D-87B2-34D761EFA1D9}.Release|Any CPU.ActiveCfg = Release
+		{F53B58EF-B596-427D-87B2-34D761EFA1D9}.Release|x64.ActiveCfg = Release
+		{F53B58EF-B596-427D-87B2-34D761EFA1D9}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
