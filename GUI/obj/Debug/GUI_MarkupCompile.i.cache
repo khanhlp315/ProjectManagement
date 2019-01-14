@@ -4,17 +4,17 @@
 exe
 C#
 .cs
-C:\Users\E7470\Documents\ProjectManagement\GUI\obj\Debug\
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\GUI\obj\Debug\
 GUI
 none
 false
 DEBUG;TRACE
-C:\Users\E7470\Documents\ProjectManagement\GUI\App.xaml
-13-295050595
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\GUI\App.xaml
+141486029929
 
-47-342564266
-841942253871
-MainWindow.xaml;Styles\Blue.xaml;Styles\CoreResourceDictionary.xaml;Styles\DataWindowResourceDictionary.xaml;Styles\UserControlResourceDictionary.xaml;Views\CreateProject.xaml;Views\CreateUser.xaml;Views\EditUser.xaml;Views\Home.xaml;Views\Login.xaml;Views\ProjectDetails.xaml;Views\Projects.xaml;Views\Users.xaml;
+48-493823918
+84-1977142631
+MainWindow.xaml;Styles\Blue.xaml;Styles\CoreResourceDictionary.xaml;Styles\DataWindowResourceDictionary.xaml;Styles\UserControlResourceDictionary.xaml;Views\CreateProject.xaml;Views\CreateUser.xaml;Views\EditUser.xaml;Views\Home.xaml;Views\Login.xaml;Views\ProjectDetails.xaml;Views\Projects.xaml;Views\Report.xaml;Views\Users.xaml;
 
 True
 
