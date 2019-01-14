@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using DTO;
+using System.Data.Entity;
 
 namespace DAO
 {
@@ -72,6 +72,15 @@ namespace DAO
                     context.Users.Remove(user);
                     context.SaveChanges();
                 }
+            }
+        }
+
+        public User GetUserByMemberId(int memberId)
+        {
+            using (var context = new ProjectManagementContext())
+            {
+                var user = context.Members.Include(m => m.User).FirstOrDefault(m => m.Id == memberId).User;
+                return user;
             }
         }
     }

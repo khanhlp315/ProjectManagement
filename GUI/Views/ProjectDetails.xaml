@@ -15,6 +15,7 @@
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
         <utils:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVis"/>
         <utils:SprintStateToSprintTextConverter x:Key="SprintStateConverter"/>
+        <utils:MemberToUsernameConverter x:Key="MemberToUsername"/>
     </UserControl.Resources>
     <i:Interaction.Triggers>
         <interactionRequest:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
@@ -68,63 +69,75 @@
                         <utils:DraggableItemsControl Margin="30" Format="Member" Grid.Column="0" ItemsSource="{Binding NotInProjectUsers}">
                             <utils:DraggableItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Label  Content="{Binding Username}"/>
+                                    <Label Content="{Binding Username}"/>
                                 </DataTemplate>
                             </utils:DraggableItemsControl.ItemTemplate>
                         </utils:DraggableItemsControl>
-                        <utils:DroppableItemsControl Format="Member" Margin="30" Grid.Column="1" ItemsSource="{Binding SelectedProject.Members}">
-                            <utils:DroppableItemsControl.ItemTemplate>
+                        <utils:DraggableAndDroppableItemsControl DragFormat="Assign" DropFormat="Member" Margin="30" Grid.Column="1" ItemsSource="{Binding SelectedProject.Members}">
+                            <utils:DraggableAndDroppableItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <Label Content="{Binding User.Username}" />
                                         <Label Content="{Binding Role}" />
-                                        <Button Content="-" Command="{Binding DataContext.RemoveFromProjectCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DroppableItemsControl}}" CommandParameter="{Binding Id}"></Button>
-                                        <Button Content="Change Role" Command="{Binding DataContext.ShowChangeRoleCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DroppableItemsControl}}" CommandParameter="{Binding Id}"></Button>
+                                        <Button Content="-" Command="{Binding DataContext.RemoveFromProjectCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DraggableAndDroppableItemsControl}}" CommandParameter="{Binding Id}"></Button>
+                                        <Button Content="Change Role" Command="{Binding DataContext.ShowChangeRoleCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DraggableAndDroppableItemsControl}}" CommandParameter="{Binding Id}"></Button>
                                     </StackPanel>
                                 </DataTemplate>
-                            </utils:DroppableItemsControl.ItemTemplate>
+                            </utils:DraggableAndDroppableItemsControl.ItemTemplate>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="DropItem">
                                     <utils:EventCommandExecuter Command="{Binding ShowAddMemberCommand, Mode=OneTime}" EventArgsConverter="{x:Static utils:DropEventArgsToDataConverter.Default}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </utils:DroppableItemsControl>
+                        </utils:DraggableAndDroppableItemsControl>
                     </Grid>
-                    <Label Content="Epics"/>
+                    <Label Content="Available User stories"/>
                     <ItemsControl ItemsSource="{Binding SelectedProject.Epics}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
                                     <Expander Header="{Binding Title}" ToolTip="{Binding Description}">
-                                        <utils:DraggableItemsControl Format="UserStory" ItemsSource="{Binding UserStories}">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel Orientation="Vertical">
-                                                        <Label Content="{Binding Title}" ToolTip="{Binding Description}"/>
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <Label Content="Story points: "></Label>
-                                                            <Label Content="{Binding StoryPoints}" />
+                                        <StackPanel>
+                                            <utils:DraggableItemsControl Format="UserStory" ItemsSource="{Binding UserStories}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Vertical">
+                                                            <Expander Header="{Binding Title}" ToolTip="{Binding Description}">
+                                                                <StackPanel>
+                                                                    <ItemsControl ItemsSource="{Binding Tasks}">
+                                                                        <ItemsControl.ItemTemplate>
+                                                                            <DataTemplate>
+                                                                                <Label Content="{Binding Title}"/>
+                                                                            </DataTemplate>
+                                                                        </ItemsControl.ItemTemplate>
+                                                                    </ItemsControl>
+                                                                    <Button Content="Add task" CommandParameter="{Binding Id}" Command="{Binding DataContext.ShowAddTaskCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl,AncestorLevel=2}}"/>
+                                                                </StackPanel>
+                                                            </Expander>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Label Content="Story points: "></Label>
+                                                                <Label Content="{Binding StoryPoints}" />
+                                                            </StackPanel>
+                                                            <StackPanel.Style>
+                                                                <Style TargetType="StackPanel">
+                                                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                                                    <Style.Triggers>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding State}" Value="{x:Static dto:UserStoryState.BACKLOG}"></Condition>
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                                                        </MultiDataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </StackPanel.Style>
                                                         </StackPanel>
-                                                        <StackPanel.Style>
-                                                            <Style TargetType="StackPanel">
-                                                                <Setter Property="Visibility" Value="Collapsed"></Setter>
-                                                                <Style.Triggers>
-                                                                    <MultiDataTrigger>
-                                                                        <MultiDataTrigger.Conditions>
-                                                                            <Condition Binding="{Binding State}" Value="{x:Static dto:UserStoryState.BACKLOG}"></Condition>
-                                                                        </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Visibility" Value="Visible"></Setter>
-                                                                    </MultiDataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </StackPanel.Style>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </utils:DraggableItemsControl>
-
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </utils:DraggableItemsControl>
+                                            <Button Content="Add User story" Command="{Binding DataContext.ShowAddUserStoryCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}}" CommandParameter="{Binding Id}"></Button>
+                                        </StackPanel>
                                     </Expander>
-                                    <Button Content="Add User story" Command="{Binding DataContext.ShowAddUserStoryCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}}" CommandParameter="{Binding Id}"></Button>
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -142,7 +155,30 @@
                         <utils:DroppableItemsControl Format="UserStory" ItemsSource="{Binding CurrentSprint.UserStories}">
                             <utils:DroppableItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Label Content="{Binding Title}"></Label>
+                                    <StackPanel>
+                                        <Label Content="{Binding Title}"></Label>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="Story Points: "/>
+                                            <Label Content="{Binding StoryPoints}"/>
+                                        </StackPanel>
+                                        <Expander Header="Tasks: ">
+                                            <ItemsControl ItemsSource="{Binding Tasks}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel>
+                                                            <Label Content="{Binding Title}"/>
+                                                            <CheckBox IsChecked="{Binding IsDone}"></CheckBox>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Label Content="{Binding AssignedMember, Converter={StaticResource MemberToUsername}}">
+                                                                </Label>
+                                                                <Button Content="Assign" CommandParameter="{Binding Id}" Command="{Binding DataContext.ShowAssignMemberCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DroppableItemsControl}}"></Button>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </Expander>
+                                    </StackPanel>
                                 </DataTemplate>
                             </utils:DroppableItemsControl.ItemTemplate>
                             <i:Interaction.Triggers>
@@ -219,6 +255,57 @@
                 </Grid>
                 <Button Content="Add" Command="{Binding AddUserStoryCommand}" Margin="10"/>
                 <Button Content="Cancel" Background="Red" Command="{Binding CancelAddUserStoryCommand}" Margin="10"/>
+            </StackPanel>
+        </Grid>
+        <Grid Visibility="{Binding AddingTask, Converter={StaticResource BoolToVis}}"  Background="#0F000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <StackPanel Background="White" Width="200" Height="350" VerticalAlignment="Center">
+                <Label Content="Add Task" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
+                <Grid>
+                    <Label Content="Title"/>
+                </Grid>
+                <Grid Margin="2, 0, 12 12">
+                    <TextBox  Text="{Binding TaskTitle}"  />
+                </Grid>
+                <Button Content="Add" Command="{Binding AddTaskCommand}" Margin="10"/>
+                <Button Content="Cancel" Background="Red" Command="{Binding CancelAddTaskCommand}" Margin="10"/>
+            </StackPanel>
+        </Grid>
+        <Grid Visibility="{Binding AssigningMember, Converter={StaticResource BoolToVis}}"  Background="#0F000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <StackPanel Background="White" Width="200" Height="350" VerticalAlignment="Center">
+                <Label Content="Add Task" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
+                <Grid>
+                    <Label Content="Member"/>
+                </Grid>
+                <Grid Margin="2, 0, 12 12">
+                    <ComboBox ItemsSource="{Binding SelectedProject.Members}" SelectedValue="{Binding AssignedMember}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding User.Username}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </Grid>
+                <Button Content="Add" Command="{Binding AssignMemberCommand}" Margin="10"/>
+                <Button Content="Cancel" Background="Red" Command="{Binding CancelAssignMemberCommand}" Margin="10"/>
+            </StackPanel>
+        </Grid>
+        <Grid Visibility="{Binding StartingSprint, Converter={StaticResource BoolToVis}}"  Background="#0F000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <StackPanel Background="White" Width="200" Height="350" VerticalAlignment="Center">
+                <Label Content="Add Task" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
+                <Grid>
+                    <Label Content="Member"/>
+                </Grid>
+                <Grid Margin="2, 0, 12 12">
+                    <ComboBox ItemsSource="{Binding SelectedProject.Members}" SelectedValue="{Binding AssignedMember}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding User.Username}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </Grid>
+                <Button Content="Add" Command="{Binding AssignMemberCommand}" Margin="10"/>
+                <Button Content="Cancel" Background="Red" Command="{Binding CancelAssignMemberCommand}" Margin="10"/>
             </StackPanel>
         </Grid>
 
