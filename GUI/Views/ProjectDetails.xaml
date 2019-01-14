@@ -117,12 +117,12 @@
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
                                 <StackPanel Orientation="Vertical">
-                                    <Button Content="Remove"  Width ="{Binding Path=ActualWidth, ElementName=membersDDICT}"  Margin="30,10,110,10"  Command="{Binding DataContext.RemoveFromProjectCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DraggableAndDroppableItemsControl}}" CommandParameter="{Binding Id}"></Button>
-                                    <Button Content="Change Role" Width ="{Binding Path=ActualWidth, ElementName=membersDDICT}" Margin="30,10,110,10" Command="{Binding DataContext.ShowChangeRoleCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DraggableAndDroppableItemsControl}}" CommandParameter="{Binding Id}"></Button>
+                                    <Button Content="Remove"  Width ="{Binding Path=ActualWidth, ElementName=membersDDICT}"  Margin="30,10,110,10"  Command="{Binding RemoveFromProjectCommand}"></Button>
+                                    <Button Content="Change Role" Width ="{Binding Path=ActualWidth, ElementName=membersDDICT}" Margin="30,10,110,10" Command="{Binding ShowChangeRoleCommand}"></Button>
                                 </StackPanel>
                                 
                             </Grid>
-                            <utils:DraggableAndDroppableItemsControl x:Name="membersDDICT" Grid.Row="1" DragFormat="Assign" DropFormat="Member" Margin="30,30,110,10" Grid.Column="1" ItemsSource="{Binding SelectedProject.Members}">
+                            <utils:DraggableAndDroppableItemsControl x:Name="membersDDICT" Grid.Row="1" DragFormat="Assign" DropFormat="Member" Margin="30,30,110,10" Grid.Column="1" ItemsSource="{Binding SelectedProject.Members}" SelectedItem="{Binding SelectedMember}">
                                 <utils:DraggableAndDroppableItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Border x:Name="Border"

@@ -54,6 +54,8 @@ namespace GUI.ViewModels
         private ObservableCollection<User> _notInProjectUsers = new ObservableCollection<User>();
 
 
+        private Member _selectedMember;
+
 
         public ObservableCollection<User> NotInProjectUsers
         {
@@ -64,6 +66,18 @@ namespace GUI.ViewModels
             set
             {
                 SetProperty(ref _notInProjectUsers, value); 
+            }
+        }
+
+        public Member SelectedMember
+        {
+            get
+            {
+                return _selectedMember;
+            }
+            set
+            {
+                SetProperty(ref _selectedMember, value);
             }
         }
 
@@ -265,7 +279,7 @@ namespace GUI.ViewModels
             set;
         }
 
-        public DelegateCommand<int?> RemoveFromProjectCommand
+        public DelegateCommand RemoveFromProjectCommand
         {
             get;
             set;
@@ -283,7 +297,7 @@ namespace GUI.ViewModels
             set;
         }
 
-        public DelegateCommand<int?> ShowChangeRoleCommand
+        public DelegateCommand ShowChangeRoleCommand
         {
             get;
             set;
@@ -470,10 +484,10 @@ namespace GUI.ViewModels
             CancelAddMemberCommand = new DelegateCommand(CancelAddMember);
             EditProjectCommand = new DelegateCommand(EditProject);
             DeleteProjectCommand = new DelegateCommand(DeleteProject);
-            RemoveFromProjectCommand = new DelegateCommand<int?>(RemoveMemberFromProject);
+            RemoveFromProjectCommand = new DelegateCommand(RemoveMemberFromProject);
             ChangeMemberRoleCommand = new DelegateCommand(ChangeMemberRole);
             CancelChangeRoleCommand = new DelegateCommand(CancelChangeRole);
-            ShowChangeRoleCommand = new DelegateCommand<int?>(ShowChangeRole);
+            ShowChangeRoleCommand = new DelegateCommand(ShowChangeRole);
             ShowAddEpicCommand = new DelegateCommand(ShowAddEpic);
             AddEpicCommand = new DelegateCommand(AddEpic);
             CancelAddEpicCommand = new DelegateCommand(CancelAddEpic);
@@ -514,6 +528,7 @@ namespace GUI.ViewModels
             {
                 _projectService.AddTask(_taskUserStoryId, TaskTitle);
                 SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
+                SelectedMember = null;
                 AddingTask = false;
             }
             catch(CheckedException e)
@@ -548,6 +563,7 @@ namespace GUI.ViewModels
             {
                 _projectService.EndSprint(SelectedProject.Id, CurrentSprint);
                 SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
+                SelectedMember = null;
                 CurrentSprint = SelectedProject.Sprints.OrderByDescending(p => p.Order).First();
             }
         }
@@ -578,6 +594,7 @@ namespace GUI.ViewModels
             {
                 _projectService.AddUserStory(_userStoryEpicId, UserStoryTitle, UserStoryDescription, UserStoryStoryPoints);
                 SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
+                SelectedMember = null;
                 AddingUserStory = false;
             }
             catch (CheckedException e)
@@ -593,6 +610,7 @@ namespace GUI.ViewModels
             AddingUserStory = false;
             
             SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
+            SelectedMember = null;
             NotInProjectUsers.Clear();
             NotInProjectUsers.AddRange(_projectService.GetAllUsersNotInProject(SelectedProject.Id));
             
@@ -627,9 +645,13 @@ namespace GUI.ViewModels
             AddingEpic = true;
         }
 
-        private void ShowChangeRole(int? id)
+        private void ShowChangeRole()
         {
-            _changingMemberId = (int)id;
+            if(SelectedMember == null)
+            {
+                return;
+            }
+            _changingMemberId = SelectedMember.Id;
             ChangingRole = true;
         }
 
@@ -642,19 +664,20 @@ namespace GUI.ViewModels
         {
             _projectService.ChangeMemberRole(_changingMemberId, SelectedRole);
             SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
+            SelectedMember = null;
             ChangingRole = false;
         }
 
-        private void RemoveMemberFromProject(int? memberId)
+        private void RemoveMemberFromProject()
         {
-            if(memberId == null)
+            if(SelectedMember == null)
             {
                 return;
             }
             try
             {
-                _projectService.RemoveMemberFromProject(SelectedProject.Id, (int)memberId);
-                var deletedMember = SelectedProject.Members.FirstOrDefault(m => m.Id == memberId);
+                _projectService.RemoveMemberFromProject(SelectedProject.Id, (int)SelectedMember.Id);
+                var deletedMember = SelectedProject.Members.FirstOrDefault(m => m.Id == SelectedMember.Id);
                 if(deletedMember != null)
                 {
                     SelectedProject.Members.Remove(deletedMember);
@@ -717,6 +740,7 @@ namespace GUI.ViewModels
             {
                 _projectService.AssignToTask(_assignedMember.Id, _assigningTaskId);
                 SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
+                SelectedMember = null;
                 CurrentSprint = SelectedProject.Sprints.OrderByDescending(p => p.Order).First();
                 AssigningMember = false;
             }
@@ -736,6 +760,7 @@ namespace GUI.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             SelectedProject = (Project)navigationContext.Parameters["Project"];
+            SelectedMember = null;
             ProjectName = SelectedProject.Name;
             ProjectKey = SelectedProject.Key;
             NotInProjectUsers.Clear();
