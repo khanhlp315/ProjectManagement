@@ -17,7 +17,7 @@ namespace GUI.Views
     /// <summary>
     /// Interaction logic for Report.xaml
     /// </summary>
-    public partial class Report : Window
+    public partial class Report : UserControl
     {
         public Report()
         {

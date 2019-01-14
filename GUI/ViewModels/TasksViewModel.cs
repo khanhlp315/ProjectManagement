@@ -2,6 +2,7 @@
 using DTO;
 using GUI.AppInitializer.Stores;
 using GUI.Core.ProjectService;
+using Prism.Commands;
 using Prism.Regions;
 using ProjectManager.ViewModels.Bases;
 using System;
@@ -17,10 +18,23 @@ namespace GUI.ViewModels
     {
         public ObservableCollection<Project> UndoneProjects
         {
+            get
+            {
+                return _undoneProjects;
+            }
+            set
+            {
+                SetProperty(ref _undoneProjects, value);
+            }
+        }
+
+        public DelegateCommand UpdateTasksCommand
+        {
             get;
             set;
         }
 
+        private ObservableCollection<Project> _undoneProjects;
         private IProjectService _projectService;
         private IStore _store;
 
@@ -28,7 +42,7 @@ namespace GUI.ViewModels
         {
             _store = store;
             _projectService = projectService;
-            UndoneProjects = new ObservableCollection<Project>();
+            _undoneProjects = new ObservableCollection<Project>();
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

@@ -30,7 +30,7 @@
                                                                 <DataTemplate>
                                                                     <StackPanel>
                                                                         <Label Content="{Binding Title}"/>
-                                                                        <CheckBox Command="{Binding DataContext.UpdateTask, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=4}}" CommandParameter="{Binding Id}"/>
+                                                                        <CheckBox Command="{Binding DataContext.UpdateTaskCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=4}}" CommandParameter="{Binding Id}"/>
                                                                     </StackPanel>
                                                                 </DataTemplate>
                                                             </ItemsControl.ItemTemplate>
