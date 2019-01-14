@@ -78,7 +78,7 @@
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="4*"/>
                             </Grid.RowDefinitions>
-                            <TextBox Grid.Row="0" MaxHeight="35" VerticalContentAlignment="Center" Margin="110,0">
+                            <TextBox Grid.Row="0" MaxHeight="35" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Margin="110,0">
                                 <TextBox.Style>
                                     <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                                         <Style.Resources>
@@ -102,7 +102,7 @@
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
-                            <utils:DraggableItemsControl Grid.Row="1" Margin="110,0,110,10" Format="Member"  ItemsSource="{Binding NotInProjectUsers}">
+                            <utils:DraggableItemsControl Grid.Row="1" Margin="110,0,110,10" Format="Member"  ItemsSource="{Binding ShowingUsers}">
                                 <utils:DraggableItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Username}" />
@@ -122,7 +122,7 @@
                                 </StackPanel>
                                 
                             </Grid>
-                            <utils:DraggableAndDroppableItemsControl x:Name="membersDDICT" Grid.Row="1" DragFormat="Assign" DropFormat="Member" Margin="30,30,110,10" Grid.Column="1" ItemsSource="{Binding SelectedProject.Members}" SelectedItem="{Binding SelectedMember}">
+                            <utils:DraggableAndDroppableItemsControl x:Name="membersDDICT" Grid.Row="1" DragFormat="Assign" DropFormat="Member" Margin="30,30,110,10" Grid.Column="1" ItemsSource="{Binding Members}" SelectedItem="{Binding SelectedMember}">
                                 <utils:DraggableAndDroppableItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Border x:Name="Border"

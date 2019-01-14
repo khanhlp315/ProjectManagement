@@ -39,6 +39,8 @@ namespace GUI.ViewModels
         private string _epicTitle;
         private string _epicDescription;
 
+        private string _searchText = "";
+
         private string _taskTitle;
 
         private string _userStoryDescription;
@@ -52,10 +54,64 @@ namespace GUI.ViewModels
         private Sprint _currentSprint;
 
         private ObservableCollection<User> _notInProjectUsers = new ObservableCollection<User>();
+        private ObservableCollection<User> _showingUsers = new ObservableCollection<User>();
 
 
         private Member _selectedMember;
 
+        private ObservableCollection<Member> _members = new ObservableCollection<Member>();
+
+        private void UpdateMembers()
+        {
+            var members = SelectedProject.Members.Where(m => m.User.Username.Contains(SearchText) || SearchText == "");
+            Members.Clear();
+            Members.AddRange(members);
+        }
+
+        private void UpdateUsers()
+        {
+            var users = _notInProjectUsers.Where(u => u.Username.Contains(SearchText) || SearchText == "");
+            ShowingUsers.Clear();
+            ShowingUsers.AddRange(users);
+        }
+
+        public ObservableCollection<Member> Members
+        {
+            get
+            {
+                return _members;
+            }
+            set
+            {
+                SetProperty(ref _members, value);
+            }
+        }
+
+        public ObservableCollection<User> ShowingUsers
+        {
+            get
+            {
+                return _showingUsers;
+            }
+            set
+            {
+                SetProperty(ref _showingUsers, value);
+            }
+        }
+
+        public string SearchText
+        {
+            get
+            {
+                return _searchText;
+            }
+            set
+            {
+                SetProperty(ref _searchText, value);
+                UpdateMembers();
+                UpdateUsers();
+            }
+        }
 
         public ObservableCollection<User> NotInProjectUsers
         {
@@ -529,6 +585,7 @@ namespace GUI.ViewModels
                 _projectService.AddTask(_taskUserStoryId, TaskTitle);
                 SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
                 SelectedMember = null;
+                UpdateMembers();
                 AddingTask = false;
             }
             catch(CheckedException e)
@@ -564,6 +621,7 @@ namespace GUI.ViewModels
                 _projectService.EndSprint(SelectedProject.Id, CurrentSprint);
                 SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
                 SelectedMember = null;
+                UpdateMembers();
                 CurrentSprint = SelectedProject.Sprints.OrderByDescending(p => p.Order).First();
             }
         }
@@ -595,6 +653,7 @@ namespace GUI.ViewModels
                 _projectService.AddUserStory(_userStoryEpicId, UserStoryTitle, UserStoryDescription, UserStoryStoryPoints);
                 SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
                 SelectedMember = null;
+                UpdateMembers();
                 AddingUserStory = false;
             }
             catch (CheckedException e)
@@ -611,9 +670,10 @@ namespace GUI.ViewModels
             
             SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
             SelectedMember = null;
+            UpdateMembers();
             NotInProjectUsers.Clear();
             NotInProjectUsers.AddRange(_projectService.GetAllUsersNotInProject(SelectedProject.Id));
-            
+            UpdateUsers();
         }
 
         private void CancelAddUserStory()
@@ -665,6 +725,7 @@ namespace GUI.ViewModels
             _projectService.ChangeMemberRole(_changingMemberId, SelectedRole);
             SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
             SelectedMember = null;
+            UpdateMembers();
             ChangingRole = false;
         }
 
@@ -715,6 +776,7 @@ namespace GUI.ViewModels
                 member.User = _addingUser;
                 member.Project = SelectedProject;
                 NotInProjectUsers.Remove(NotInProjectUsers.FirstOrDefault(user => user.Id == _addingUser.Id));
+                UpdateUsers();
                 SelectingRole = false;
             }
             catch (Exception e)
@@ -741,6 +803,7 @@ namespace GUI.ViewModels
                 _projectService.AssignToTask(_assignedMember.Id, _assigningTaskId);
                 SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
                 SelectedMember = null;
+                UpdateMembers();
                 CurrentSprint = SelectedProject.Sprints.OrderByDescending(p => p.Order).First();
                 AssigningMember = false;
             }
@@ -765,11 +828,13 @@ namespace GUI.ViewModels
             ProjectKey = SelectedProject.Key;
             NotInProjectUsers.Clear();
             NotInProjectUsers.AddRange(_projectService.GetAllUsersNotInProject(SelectedProject.Id));
+            UpdateUsers();
             IsProjectStarted = SelectedProject.Sprints.Count != 0;
             if(IsProjectStarted)
             {
                 CurrentSprint = SelectedProject.Sprints.OrderByDescending(p => p.Order).First();
             }
+            UpdateMembers();
         }
 
         public void StartProject()
