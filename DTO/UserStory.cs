@@ -44,5 +44,11 @@ namespace DTO
             get;
             set;
         }
+
+        public ObservableCollection<Sprint> Sprints
+        {
+            get;
+            set;
+        }
     }
 }

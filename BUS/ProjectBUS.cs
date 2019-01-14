@@ -133,18 +133,22 @@ namespace BUS
             _projectDAO.EndSprint(sprint.Id, date);
             foreach(var userStory in sprint.UserStories)
             {
+                bool isFinished = true;
                 foreach(var task in userStory.Tasks)
                 {
-
-                    _projectDAO.UpdateUserStoryState(userStory.Id, UserStoryState.RESOLVED);
+                    if(!task.IsDone)
+                    {
+                        isFinished = false;
+                        _projectDAO.ResetAssignedMember(task.Id);
+                    }
                 }
+                _projectDAO.UpdateUserStoryState(userStory.Id, isFinished? UserStoryState.RESOLVED: UserStoryState.BACKLOG);
             }
 
             var newSprint = new Sprint()
             {
                 Order = sprint.Order + 1,
                 State = SprintState.QUEUING,
-                
             };
             _projectDAO.AddSprint(projectId, newSprint);
             var project = _projectDAO.GetProjectById(projectId);

@@ -117,6 +117,16 @@ namespace DAO
             }
         }
 
+        public void ResetAssignedMember(int id)
+        {
+            using (var context = new ProjectManagementContext())
+            {
+                var task = context.Tasks.Include(t => t.AssignedMember).FirstOrDefault(t => t.Id == id);
+                task.AssignedMember = null;
+                context.SaveChanges();
+            }
+        }
+
         public void EndSprint(int id, DateTime date)
         {
             using (var context = new ProjectManagementContext())
