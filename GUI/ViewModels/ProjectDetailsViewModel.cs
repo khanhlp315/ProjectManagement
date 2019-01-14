@@ -777,6 +777,7 @@ namespace GUI.ViewModels
                 member.Project = SelectedProject;
                 NotInProjectUsers.Remove(NotInProjectUsers.FirstOrDefault(user => user.Id == _addingUser.Id));
                 UpdateUsers();
+                UpdateMembers();
                 SelectingRole = false;
             }
             catch (Exception e)
