@@ -80,7 +80,8 @@
                         Grid.Row="2"
                         Grid.ColumnSpan="2"
                         Content="Login"
-                        Command="{Binding LoginCommand}">
+                        Command="{Binding LoginCommand}"
+                        IsDefault="True">
                     <Button.Style>
                         <Style BasedOn="{StaticResource ToolbarButtonStyle}"
                                TargetType="Button">
