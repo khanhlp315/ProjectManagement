@@ -22,6 +22,8 @@ namespace GUI.Core.ProjectService
         void AddUserStory(int epicId, string title, string description, int storyPoints);
         Sprint GetNextSprint(int projectId);
         List<Project> GetAllUndoneProjects(int userId);
+        List<Project> GetAllUnapprovedProjects(int userId);
+
         void AddUserStoryToSprint(int sprintId, UserStory userStory);
         void StartSprint(Sprint sprint);
         Sprint EndSprint(int projectId, Sprint sprint);
@@ -29,5 +31,7 @@ namespace GUI.Core.ProjectService
         void AssignToTask(int memberId, int taskId);
 
         void UpdateTaskCompletion(int taskId);
+        void ApproveTask(int taskId);
+        void DenyTask(int taskId);
     }
 }

@@ -181,5 +181,20 @@ namespace GUI.Core.ProjectService
         {
             _projectBUS.UpdateTaskCompletion(taskId);
         }
+
+        public List<Project> GetAllUnapprovedProjects(int userId)
+        {
+            return _projectBUS.GetAllUnapprovedProjects(userId);
+        }
+
+        public void ApproveTask(int taskId)
+        {
+            _projectBUS.ApproveTask(taskId);
+        }
+
+        public void DenyTask(int taskId)
+        {
+            _projectBUS.DenyTask(taskId);
+        }
     }
 }

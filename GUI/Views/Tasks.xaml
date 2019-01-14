@@ -34,8 +34,7 @@
                                                                 <DataTemplate>
                                                                     <StackPanel>
                                                                         <Label Content="{Binding Title}"/>
-                                                                        <Button Content="Complete task" Visibility="{Binding IsDone, Converter={StaticResource InverseBoolToVis}}" Command="{Binding DataContext.UpdateTaskCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=4}}" CommandParameter="{Binding Id}"/>
-                                                                        <Button Content="Undo Complete task" Visibility="{Binding IsDone, Converter={StaticResource BoolToVis}}" Command="{Binding DataContext.UpdateTaskCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=4}}" CommandParameter="{Binding Id}"/>
+                                                                        <Button Content="Complete task" Command="{Binding DataContext.UpdateTaskCompletionCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=4}}" CommandParameter="{Binding Id}"/>
                                                                     </StackPanel>
                                                                 </DataTemplate>
                                                             </ItemsControl.ItemTemplate>
@@ -70,8 +69,8 @@
                                                                 <DataTemplate>
                                                                     <StackPanel>
                                                                         <Label Content="{Binding Title}"/>
-                                                                        <Button Content="Approve" Visibility="{Binding IsDone, Converter={StaticResource BoolToVis}}" Command="{Binding DataContext.ApproveTaskCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=4}}" CommandParameter="{Binding Id}"/>
-                                                                        <Button Content="Deny" Visibility="{Binding IsDone, Converter={StaticResource BoolToVis}}" Command="{Binding DataContext.DenyTaskCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=4}}" CommandParameter="{Binding Id}"/>
+                                                                        <Button Content="Approve" Command="{Binding DataContext.ApproveCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=4}}" CommandParameter="{Binding Id}"/>
+                                                                        <Button Content="Deny" Command="{Binding DataContext.DenyCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=4}}" CommandParameter="{Binding Id}"/>
                                                                     </StackPanel>
                                                                 </DataTemplate>
                                                             </ItemsControl.ItemTemplate>

@@ -67,6 +67,7 @@
                 <TextBox x:Name="ProjectKeyTextBox"
                          Style="{StaticResource CustomTextboxStyle}"
                          Grid.Column="1"
+                         CharacterCasing="Upper"
                          Text="{Binding ProjectKey, UpdateSourceTrigger=PropertyChanged}"
                          />
 
