@@ -8,8 +8,10 @@ namespace BUS.Exceptions
 {
     public class CheckedException: SystemException
     {
-        public CheckedException(string message) : base(message)
+        public bool ShowError;
+        public CheckedException(string message, bool showError = true) : base(message)
         {
+            ShowError = showError;
         }
     }
 }

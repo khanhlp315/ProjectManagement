@@ -28,7 +28,11 @@ namespace BUS
 
         public void AddUserStoryToSprint(int sprintId, UserStory userStory)
         {
-            if(userStory.State != UserStoryState.BACKLOG)
+            if(userStory.State == UserStoryState.ON_SPRINT)
+            {
+                throw new CheckedException($"User story {userStory.Title} is already finished.", true);
+            }
+            else if(userStory.State != UserStoryState.BACKLOG)
             {
                 throw new CheckedException($"User story {userStory.Title} is already finished.");
             }
