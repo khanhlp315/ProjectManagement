@@ -170,7 +170,7 @@
                             <TextBlock Text="{Binding CurrentSprint.Order}"/>
                         </StackPanel>
                         <Button Content="{Binding CurrentSprint.State, Converter={StaticResource SprintStateConverter}}" Command="{Binding ChangeSprintStateCommand}"></Button>
-                        <utils:DroppableItemsControl Format="UserStory" ItemsSource="{Binding CurrentSprint.UserStories}">
+                        <utils:DroppableItemsControl Format="UserStory" MinHeight="50"  ItemsSource="{Binding CurrentSprint.UserStories}">
                             <utils:DroppableItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
