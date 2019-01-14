@@ -38,12 +38,12 @@ namespace DTO
             get;
             set;
         }
-        public int TasksRemained
+        public int UserStoriesRemained
         {
             get;
             set;
         }
-        public int TasksDone
+        public int StoryPointsAccumulated
         {
             get;
             set;

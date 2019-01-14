@@ -33,5 +33,6 @@ namespace GUI.Core.ProjectService
         void UpdateTaskCompletion(int taskId);
         void ApproveTask(int taskId);
         void DenyTask(int taskId);
+        List<ReportObject> GetReports(DateTime startDate, DateTime endDate);
     }
 }

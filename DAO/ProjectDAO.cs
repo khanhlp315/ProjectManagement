@@ -93,6 +93,16 @@ namespace DAO
             }
         }
 
+        public void SetStartDate(int projectId, DateTime today)
+        {
+            using (var context = new ProjectManagementContext())
+            {
+                var project = context.Projects.Find(projectId);
+                project.StartDate = today;
+                context.SaveChanges();
+            }
+        }
+
         public void AddSprint(int projectId, Sprint sprint)
         {
             using (var context = new ProjectManagementContext())
@@ -135,6 +145,15 @@ namespace DAO
                 sprint.State = SprintState.FINISHED;
                 sprint.EndDate = date;
                 context.SaveChanges();
+            }
+        }
+
+        public List<Project> GetAllProjectsBetweenDate(DateTime startDate, DateTime endDate)
+        {
+            using (var context = new ProjectManagementContext())
+            {
+                var projects = context.Projects.Include(p => p.CreatedUser).Include(p => p.Members).Include(p => p.Sprints).Include(p => p.Epics).Include(p => p.Epics.Select(e => e.UserStories)).Include(p => p.Sprints.Select(sprint => sprint.UserStories)).Include(p => p.Members.Select(member => member.User)).Include(p => p.Epics.Select(epic => epic.UserStories.Select(u => u.Tasks.Select(t => t.AssignedMember))));
+                return projects.Where(project => project.StartDate != null && project.StartDate >= startDate && project.StartDate <= endDate).ToList();
             }
         }
 

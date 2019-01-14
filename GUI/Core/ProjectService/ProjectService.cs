@@ -196,5 +196,10 @@ namespace GUI.Core.ProjectService
         {
             _projectBUS.DenyTask(taskId);
         }
+
+        public List<ReportObject> GetReports(DateTime startDate, DateTime endDate)
+        {
+            return _projectBUS.GetReports(startDate, endDate);
+        }
     }
 }

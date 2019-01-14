@@ -104,6 +104,7 @@ namespace BUS
                     State = SprintState.QUEUING,
                 };
                 _projectDAO.AddSprint(projectId, sprint);
+                _projectDAO.SetStartDate(projectId, DateTime.Today);
                 project = _projectDAO.GetProjectById(projectId);
             }
 
@@ -157,6 +158,26 @@ namespace BUS
             _projectDAO.AddSprint(projectId, newSprint);
             var project = _projectDAO.GetProjectById(projectId);
             return project.Sprints.OrderByDescending(s => s.Order).First();
+        }
+
+        public List<ReportObject> GetReports(DateTime startDate, DateTime endDate)
+        {
+            var projects = _projectDAO.GetAllProjectsBetweenDate(startDate, endDate);
+            var reportObjects = new List<ReportObject>();
+            foreach(var project in projects)
+            {
+                var reportObject = new ReportObject();
+                reportObject.ProjectKey = project.Key;
+                reportObject.ProjectName = project.Name;
+                reportObject.OwnerUsername = project.CreatedUser.Username;
+                reportObject.SumOfMembers = project.Members.Count;
+                reportObject.CurrentSprint = project.Sprints.Max(s => s.Order);
+                reportObject.EpicsRemained = project.Epics.Where(epic => epic.UserStories.Any(u => u.State != UserStoryState.RESOLVED)).ToList().Count;
+                reportObject.UserStoriesRemained = project.Epics.Sum(e => e.UserStories.Count(u => u.State != UserStoryState.RESOLVED));
+                reportObject.StoryPointsAccumulated = project.Epics.Sum(e => e.UserStories.Where(u => u.State == UserStoryState.RESOLVED).Sum(u => u.StoryPoints));
+                reportObjects.Add(reportObject);
+            }
+            return reportObjects;
         }
 
         public void ApproveTask(int taskId)
