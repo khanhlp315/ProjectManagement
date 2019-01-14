@@ -65,7 +65,7 @@
                 <TextBox x:Name="ProjectKeyTextBox"
                          Style="{StaticResource CustomTextboxStyle}"
                          Grid.Column="1"
-                         Text="{Binding ProjectKey}"
+                         Text="{Binding ProjectKey, UpdateSourceTrigger=PropertyChanged}"
                          />
 
 
@@ -76,7 +76,7 @@
                          Style="{StaticResource CustomTextboxStyle}"
                          Grid.Column="1"
                          Grid.Row="1"
-                         Text="{Binding ProjectName}"
+                         Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged}"
                          />
                 <Button x:Name="CreateButton"
                         Grid.Row="2"

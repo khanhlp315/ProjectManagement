@@ -76,7 +76,7 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                 <TextBox x:Name="AccountNameTextBox"
                          Style="{StaticResource CustomTextboxStyle}"
                          Grid.Column="1"
-                         Text="{Binding SelectedUser.Username}"
+                         Text="{Binding SelectedUser.Username, UpdateSourceTrigger=PropertyChanged}"
                          />
 
 
@@ -87,7 +87,7 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                          Style="{StaticResource CustomPasswordBoxStyle}"
                          Grid.Column="1"
                          Grid.Row="1"
-                         utils:PasswordHelper.Attach="True" utils:PasswordHelper.Password="{Binding SelectedUser.Password, Mode=TwoWay}"
+                         utils:PasswordHelper.Attach="True" utils:PasswordHelper.Password="{Binding SelectedUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          />
                 <TextBlock Text="Permission"
                            Style="{StaticResource CustomTextblockStyle}"

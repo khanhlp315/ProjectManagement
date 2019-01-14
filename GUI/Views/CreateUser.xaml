@@ -48,6 +48,7 @@
         <StackPanel VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     Width="350">
+            
             <materialDesign:PackIcon Foreground="{StaticResource ThemeColorBrush}" Kind="ArrowBack" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             <Button Style="{StaticResource MenuButtonStyle}"
                     IsEnabled="False"
@@ -75,7 +76,7 @@
                 <TextBox x:Name="UserNameTextBox"
                          Style="{StaticResource CustomTextboxStyle}"
                          Grid.Column="1"
-                         Text="{Binding Username}"
+                         Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
                          />
 
 
@@ -86,7 +87,7 @@
                          Style="{StaticResource CustomPasswordBoxStyle}"
                          Grid.Column="1"
                              Grid.Row="1"
-                             utils:PasswordHelper.Attach="True" utils:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"
+                             utils:PasswordHelper.Attach="True" utils:PasswordHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          />
                 <TextBlock Text="Permission"
                            Style="{StaticResource CustomTextblockStyle}"
