@@ -138,3 +138,5 @@ G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectMan
 G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\GUI\obj\Debug\GUI.csproj.CopyComplete
 G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\GUI\obj\Debug\GUI.exe
 G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\GUI\obj\Debug\GUI.pdb
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\GUI\obj\Debug\Views\Report.g.cs
+G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\GUI\obj\Debug\Views\Report.baml

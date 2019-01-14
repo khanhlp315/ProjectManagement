@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 G:\Phương pháp phát triển phần mềm hướng đối tượng\ProjectManagement\GUI\App.xaml
-13-295050595
+141486029929
 
-43-1720209476
+44-1392600565
 84-1977142631
-MainWindow.xaml;Styles\Blue.xaml;Styles\CoreResourceDictionary.xaml;Styles\DataWindowResourceDictionary.xaml;Styles\UserControlResourceDictionary.xaml;Views\CreateProject.xaml;Views\CreateUser.xaml;Views\EditUser.xaml;Views\Home.xaml;Views\Login.xaml;Views\ProjectDetails.xaml;Views\Projects.xaml;Views\Users.xaml;
+MainWindow.xaml;Styles\Blue.xaml;Styles\CoreResourceDictionary.xaml;Styles\DataWindowResourceDictionary.xaml;Styles\UserControlResourceDictionary.xaml;Views\CreateProject.xaml;Views\CreateUser.xaml;Views\EditUser.xaml;Views\Home.xaml;Views\Login.xaml;Views\ProjectDetails.xaml;Views\Projects.xaml;Views\Report.xaml;Views\Users.xaml;
 
 False
 
