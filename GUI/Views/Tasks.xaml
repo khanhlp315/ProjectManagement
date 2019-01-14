@@ -52,8 +52,41 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <Label Content="Waiting for approve tasks"/>
         <ItemsControl ItemsSource="{Binding UnapprovedProjects}">
-
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Expander Header="{Binding Key}" ToolTip="{Binding Name}">
+                        <ItemsControl ItemsSource="{Binding Epics}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Expander Header="{Binding Title}" ToolTip="{Binding Description}">
+                                        <ItemsControl ItemsSource="{Binding UserStories}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Expander Header="{Binding Title}" ToolTip="{Binding Description}">
+                                                        <ItemsControl ItemsSource="{Binding Tasks}">
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <StackPanel>
+                                                                        <Label Content="{Binding Title}"/>
+                                                                        <Button Content="Approve" Visibility="{Binding IsDone, Converter={StaticResource BoolToVis}}" Command="{Binding DataContext.ApproveTaskCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=4}}" CommandParameter="{Binding Id}"/>
+                                                                        <Button Content="Deny" Visibility="{Binding IsDone, Converter={StaticResource BoolToVis}}" Command="{Binding DataContext.DenyTaskCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=4}}" CommandParameter="{Binding Id}"/>
+                                                                    </StackPanel>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </Expander>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Expander>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Expander>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
         </ItemsControl>
     </StackPanel>
 </UserControl>
