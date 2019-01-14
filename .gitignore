@@ -1,2 +1,10 @@
 .vs/
 ProjectManagement.sln.DotSettings.user
+BUS/bin/
+BUS/obj/
+DAO/bin/
+DAO/obj/
+DTO/bin/
+DTO/obj/
+GUI/bin/
+GUI/obj/
