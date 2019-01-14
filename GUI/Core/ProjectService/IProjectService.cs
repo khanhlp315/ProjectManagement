@@ -1,6 +1,7 @@
 ﻿using DTO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace GUI.Core.ProjectService
         Epic AddEpic(int projectId, string epicTitle, string epicDescription);
         void AddUserStory(int epicId, string title, string description, int storyPoints);
         Sprint GetNextSprint(int projectId);
+        List<Project> GetAllUndoneProjects(int userId);
         void AddUserStoryToSprint(int sprintId, UserStory userStory);
         void StartSprint(Sprint sprint);
         Sprint EndSprint(int projectId, Sprint sprint);

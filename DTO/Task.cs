@@ -26,6 +26,12 @@ namespace DTO
             set;
         }
 
+        public bool IsApproved
+        {
+            get;
+            set;
+        }
+
         public Member AssignedMember
         {
             get;

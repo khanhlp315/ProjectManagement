@@ -102,7 +102,7 @@
             <RowDefinition Height="10*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <TextBox VerticalContentAlignment="Center">
+            <TextBox VerticalContentAlignment="Center" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.Style>
                     <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                         <Style.Resources>

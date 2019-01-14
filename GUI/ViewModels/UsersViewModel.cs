@@ -16,19 +16,22 @@ namespace GUI.ViewModels
     class UsersViewModel: ViewModelBase, INavigationAware
     {
         private ObservableCollection<User> _users;
+        private ObservableCollection<User> _showingUsers;
+        private string _searchText = "";
 
 
         private bool _canCreateUser;
         private bool _canEditUser;
+
         public ObservableCollection<User> Users
         {
             get
             {
-                return _users;
+                return _showingUsers;
             }
             set
             {
-                SetProperty(ref _users, value);
+                SetProperty(ref _showingUsers, value);
             }
         }
 
@@ -56,6 +59,41 @@ namespace GUI.ViewModels
             }
         }
 
+        public string SearchText
+        {
+            get
+            {
+                return _searchText;
+            }
+            set
+            {
+                SetProperty(ref _searchText, value);
+                UpdateShowingUsers();
+            }
+        }
+
+        private void UpdateShowingUsers()
+        {
+            Users.Clear();
+            var showingUsers = _users.Where(u =>
+            {
+                if (SearchText == "")
+                {
+                    return true;
+                }
+                if (u.Username.Contains(SearchText))
+                {
+                    return true;
+                }
+                return false;
+            });
+            if (CanCreateUser)
+            {
+                Users.Add(null);
+            }
+            Users.AddRange(showingUsers);
+        }
+
         public DelegateCommand ShowCreateUserCommand
         {
             get;
@@ -81,14 +119,10 @@ namespace GUI.ViewModels
             CanCreateUser = _store.GetCurrentUser().Permission == Permission.ADMIN;
             CanEditUser = _store.GetCurrentUser().Permission == Permission.ADMIN;
 
-            Users = new ObservableCollection<User>();
-            if(CanCreateUser)
-            {
-                Users.Add(null);
-            }
-            Users.AddRange(_userService.GetAllUsers());
-
-
+            _users = new ObservableCollection<User>();
+            _showingUsers = new ObservableCollection<User>();
+            _users.AddRange(_userService.GetAllUsers());
+            UpdateShowingUsers();
         }
 
         private void ShowCreateUser()
@@ -124,13 +158,9 @@ namespace GUI.ViewModels
             CanCreateUser = _store.GetCurrentUser().Permission == Permission.ADMIN;
             CanEditUser = _store.GetCurrentUser().Permission == Permission.ADMIN;
 
-            Users.Clear();
-            if (CanCreateUser)
-            {
-                Users.Add(null);
-            }
-            Users.AddRange(_userService.GetAllUsers());
-
+            _users.Clear();
+            _users.AddRange(_userService.GetAllUsers());
+            UpdateShowingUsers();
 
         }
 

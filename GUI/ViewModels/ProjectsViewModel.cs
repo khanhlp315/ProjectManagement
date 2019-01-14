@@ -17,20 +17,62 @@ namespace GUI.ViewModels
     class ProjectsViewModel: ViewModelBase, INavigationAware
     {
         private ObservableCollection<Project> _projects;
-
+        private ObservableCollection<Project> _showingProjects;
+        private string _searchText = "";
 
         private bool _canCreateProject;
         public ObservableCollection<Project> Projects
         {
             get
             {
-                return _projects;
+                return _showingProjects;
             }
             set
             {
-                SetProperty(ref _projects, value);
+                SetProperty(ref _showingProjects, value);
             }
         }
+
+        public string SearchText
+        {
+            get
+            {
+                return _searchText;
+            }
+            set
+            {
+                SetProperty(ref _searchText, value);
+                UpdateShowingProjects();
+            }
+        }
+
+        private void UpdateShowingProjects()
+        {
+            Projects.Clear();
+            
+            var showingProjects = _projects.Where(p =>
+            {
+                if(SearchText == "")
+                {
+                    return true;
+                }
+                if (p.Name.Contains(SearchText))
+                {
+                    return true;
+                }
+                else if (p.Key.Contains(SearchText))
+                {
+                    return true;
+                }
+                return false;
+            });
+            if (CanCreateProject)
+            {
+                Projects.Add(null);
+            }
+            Projects.AddRange(showingProjects);
+        }
+
 
         public bool CanCreateProject
         {
@@ -67,13 +109,10 @@ namespace GUI.ViewModels
             _projectService = projectService;
 
             CanCreateProject = _store.GetCurrentUser().Permission == Permission.OWNER;
-
-            Projects = new ObservableCollection<Project>();
-            if(CanCreateProject)
-            {
-                Projects.Add(null);
-            }
-            Projects.AddRange(_projectService.GetAllProjectsByMember(_store.GetCurrentUser().Id));
+            _showingProjects = new ObservableCollection<Project>();
+            _projects = new ObservableCollection<Project>();
+            _projects.AddRange(_projectService.GetAllProjectsByMember(_store.GetCurrentUser().Id));
+            UpdateShowingProjects();
         }
 
         private void ShowCreateProject()
@@ -92,12 +131,9 @@ namespace GUI.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             CanCreateProject = _store.GetCurrentUser().Permission == Permission.OWNER;
-            Projects.Clear();
-            if(CanCreateProject)
-            {
-                Projects.Add(null);
-            }
-            Projects.AddRange(_projectService.GetAllProjectsByMember(_store.GetCurrentUser().Id));
+            _projects.Clear();
+            _projects.AddRange(_projectService.GetAllProjectsByMember(_store.GetCurrentUser().Id));
+            UpdateShowingProjects();
         }
 
         private void ViewProject(int? projectId)

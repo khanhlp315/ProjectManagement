@@ -155,6 +155,74 @@ namespace BUS
             return project.Sprints.OrderByDescending(s => s.Order).First();
         }
 
+        public List<Project> GetAllUndoneProjects(int userId)
+        {
+            var projects = _projectDAO.GetAllProjectsByMember(userId);
+            var selectedProjects = new List<Project>();
+            
+            foreach(var project in projects)
+            {
+                var member = project.Members.FirstOrDefault(m => m.User.Id == userId);
+                bool projectHasTask = false;
+                var epicsToRemove = new List<Epic>();
+                foreach(var epic in project.Epics)
+                {
+                    bool epicHasTask = false;
+                    var userStoriesToRemove = new List<UserStory>();
+                    foreach(var userStory in epic.UserStories)
+                    {
+                        bool userStoryHasTask = false;
+                        var tasksToRemove = new List<Task>();
+                        foreach(var task in userStory.Tasks)
+                        {
+                            if(!task.IsDone && task.AssignedMember.Id == member.Id)
+                            {
+                                userStoryHasTask = true;
+                            }
+                            else
+                            {
+                                tasksToRemove.Add(task);
+                            }
+                        }
+                        foreach (var task in tasksToRemove)
+                        {
+                            userStory.Tasks.Remove(task);
+                        }
+                        if (userStoryHasTask)
+                        {
+                            epicHasTask = true;
+                        }
+                        else
+                        {
+                            userStoriesToRemove.Add(userStory);
+                        }
+                    }
+                    foreach(var userStory in userStoriesToRemove)
+                    {
+                        epic.UserStories.Remove(userStory);
+                    }
+                    if(epicHasTask)
+                    {
+                        projectHasTask = true;
+                    }
+                    else
+                    {
+                        epicsToRemove.Add(epic);
+                    }
+                }
+                foreach(var epic in epicsToRemove)
+                {
+                    project.Epics.Remove(epic);
+                }
+                if(projectHasTask)
+                {
+                    selectedProjects.Add(project);
+                }
+            }
+
+            return selectedProjects;
+        }
+
         public void AssignToTask(int memberId, int taskId)
         {
             _projectDAO.AssignTask(memberId, taskId);

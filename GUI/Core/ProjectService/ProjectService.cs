@@ -169,5 +169,10 @@ namespace GUI.Core.ProjectService
         {
             _projectBUS.AssignToTask(memberId, taskId);
         }
+
+        public List<Project> GetAllUndoneProjects(int userId)
+        {
+            return _projectBUS.GetAllUndoneProjects(userId);
+        }
     }
 }

@@ -94,7 +94,7 @@
 
                 <ComboBox ItemsSource="{Binding Source={utils:Enumeration {x:Type dto:Permission}}}"
                       DisplayMemberPath="Description"
-                      SelectedValue="{Binding Permission}"
+                      SelectedValue="{Binding UserPermission, Mode=TwoWay}"
                       SelectedValuePath="Value"
                           Grid.Column="1"
                           Grid.Row="2"
