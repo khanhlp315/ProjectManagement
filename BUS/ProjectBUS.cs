@@ -140,7 +140,7 @@ namespace BUS
                 bool isFinished = true;
                 foreach(var task in userStory.Tasks)
                 {
-                    if(!task.IsDone)
+                    if(!task.IsApproved)
                     {
                         isFinished = false;
                         _projectDAO.ResetAssignedMember(task.Id);
@@ -350,7 +350,8 @@ namespace BUS
             var task = new Task()
             {
                 Title = taskTitle,
-                IsDone = false
+                IsDone = false,
+                IsApproved = false
             };
             _projectDAO.AddTask(userStoryId, task);
         }

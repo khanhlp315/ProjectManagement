@@ -190,7 +190,7 @@
                                                         <DataTemplate>
                                                             <StackPanel>
                                                                 <TextBlock Text="{Binding Title}"/>
-                                                                <CheckBox IsEnabled="False" IsChecked="{Binding IsDone}"></CheckBox>
+                                                                <CheckBox IsEnabled="False" IsChecked="{Binding IsApproved}"></CheckBox>
                                                                 <StackPanel Orientation="Horizontal">
                                                                     <TextBlock Text="{Binding AssignedMember, Converter={StaticResource MemberToUsername}}">
                                                                     </TextBlock>
