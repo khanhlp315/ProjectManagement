@@ -16,12 +16,12 @@
         <utils:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVis"/>
         <utils:SprintStateToSprintTextConverter x:Key="SprintStateConverter"/>
     </UserControl.Resources>
-    <i:Interaction.Triggers>
+    <!--<i:Interaction.Triggers>
         <interactionRequest:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
             <interactionRequest:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True" WindowStartupLocation="CenterScreen">
             </interactionRequest:PopupWindowAction>
         </interactionRequest:InteractionRequestTrigger>
-    </i:Interaction.Triggers>
+    </i:Interaction.Triggers>-->
     <Grid VerticalAlignment="Stretch">
         <ScrollViewer>
             <Grid>
@@ -83,11 +83,11 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </utils:DroppableItemsControl.ItemTemplate>
-                            <i:Interaction.Triggers>
+                            <!--<i:Interaction.Triggers>
                                 <i:EventTrigger EventName="DropItem">
                                     <utils:EventCommandExecuter Command="{Binding ShowAddMemberCommand, Mode=OneTime}" EventArgsConverter="{x:Static utils:DropEventArgsToDataConverter.Default}"/>
                                 </i:EventTrigger>
-                            </i:Interaction.Triggers>
+                            </i:Interaction.Triggers>-->
                         </utils:DroppableItemsControl>
                     </Grid>
                     <Label Content="Epics"/>
@@ -145,11 +145,11 @@
                                     <Label Content="{Binding Title}"></Label>
                                 </DataTemplate>
                             </utils:DroppableItemsControl.ItemTemplate>
-                            <i:Interaction.Triggers>
+                            <!--<i:Interaction.Triggers>
                                 <i:EventTrigger EventName="DropItem">
                                     <utils:EventCommandExecuter Command="{Binding AddUserStoryToSprintCommand, Mode=OneTime}" EventArgsConverter="{x:Static utils:DropEventArgsToDataConverter.Default}"/>
                                 </i:EventTrigger>
-                            </i:Interaction.Triggers>
+                            </i:Interaction.Triggers>-->
                         </utils:DroppableItemsControl>
                     </StackPanel>
                 </StackPanel>
