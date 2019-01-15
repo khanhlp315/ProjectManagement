@@ -206,5 +206,15 @@ namespace GUI.Core.ProjectService
         {
             return _projectBUS.GetAllProjects();
         }
+
+        public void DeleteEpic(int id, int projectId)
+        {
+            _projectBUS.DeleteEpic(id, projectId);
+        }
+
+        public void DeleteUserStory(int id, int projectId)
+        {
+            _projectBUS.DeleteUserStory(id, projectId);
+        }
     }
 }

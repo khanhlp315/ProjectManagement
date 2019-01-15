@@ -182,6 +182,30 @@ namespace BUS
             return project.Sprints.OrderByDescending(s => s.Order).First();
         }
 
+        public void DeleteUserStory(int id, int projectId)
+        {
+            var userStory = _projectDAO.GetUserStoryById(id);
+            if(userStory.State != UserStoryState.BACKLOG)
+            {
+                throw new CheckedException("Cannot üsed user stories");
+
+            }
+            _projectDAO.DeleteUserStory(id, projectId);
+        }
+
+        public void DeleteEpic(int id, int projectId)
+        {
+            var epic = _projectDAO.GetEpicFromId(id);
+            foreach(var userStory in epic.UserStories)
+            {
+                if(userStory.State != UserStoryState.BACKLOG)
+                {
+                    throw new CheckedException("Cannot delete epic with used user stories");
+                }
+            }
+            _projectDAO.DeleteEpic(id, projectId);
+        }
+
         public List<Project> GetAllProjects()
         {
             var projects = _projectDAO.GetAllProjects();

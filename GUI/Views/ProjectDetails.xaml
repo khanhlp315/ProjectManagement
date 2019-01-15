@@ -241,12 +241,14 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
+                                        <Button Content="Delete epic" Command="{Binding DataContext.DeleteEpicCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}}" CommandParameter="{Binding Id}"/>
                                         <Expander Header="{Binding Title}" ToolTip="{Binding Description}">
                                             <StackPanel>
                                                 <utils:DraggableItemsControl Format="UserStory" ItemsSource="{Binding UserStories}">
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate>
                                                             <StackPanel Orientation="Vertical">
+                                                                <Button Content="Delete User story" Command="{Binding DataContext.DeleteUserStoryCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=2}}" CommandParameter="{Binding Id}"/>
                                                                 <Expander Header="{Binding Title}" ToolTip="{Binding Description}">
                                                                     <StackPanel>
                                                                         <ItemsControl ItemsSource="{Binding Tasks}">

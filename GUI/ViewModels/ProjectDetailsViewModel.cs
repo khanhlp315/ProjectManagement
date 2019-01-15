@@ -437,6 +437,12 @@ namespace GUI.ViewModels
             set;
         }
 
+        public DelegateCommand<int?> DeleteUserStoryCommand
+        {
+            get;
+            set;
+        }
+
         public DelegateCommand AssignMemberCommand
         {
             get;
@@ -559,6 +565,41 @@ namespace GUI.ViewModels
             ShowAssignMemberCommand = new DelegateCommand<int?>(ShowAssignMember);
             AssignMemberCommand = new DelegateCommand(AssignMember);
             CancelAssignMemberCommand = new DelegateCommand(CancelAssignMember);
+            DeleteEpicCommand = new DelegateCommand<int?>(DeleteEpic);
+            DeleteUserStoryCommand = new DelegateCommand<int?>(DeleteUserStory);
+
+        }
+
+        private void DeleteEpic(int? obj)
+        {
+            try
+            {
+                var id = (int)obj;
+                _projectService.DeleteEpic(id, SelectedProject.Id);
+                SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
+                SelectedMember = null;
+                UpdateMembers();
+            }
+            catch (CheckedException e)
+            {
+                ShowError("Error", e.Message);
+            }
+        }
+
+        private void DeleteUserStory(int? obj)
+        {
+            try
+            {
+                var id = (int)obj;
+                _projectService.DeleteUserStory(id, SelectedProject.Id);
+                SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
+                SelectedMember = null;
+                UpdateMembers();
+            }
+            catch (CheckedException e)
+            {
+                ShowError("Error", e.Message);
+            }
         }
 
         private void CancelAssignMember()
@@ -811,6 +852,12 @@ namespace GUI.ViewModels
         {
             _addingUser = data;
             SelectingRole = true;
+        }
+
+        public DelegateCommand<int?> DeleteEpicCommand
+        {
+            get;
+            set;
         }
 
         private void AssignMember()

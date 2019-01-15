@@ -35,5 +35,7 @@ namespace GUI.Core.ProjectService
         void DenyTask(int taskId);
         List<ReportObject> GetReports(DateTime startDate, DateTime endDate);
         List<Project> GetAllProjects();
+        void DeleteEpic(int id, int projectId);
+        void DeleteUserStory(int id, int projectId);
     }
 }

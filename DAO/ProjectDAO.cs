@@ -157,6 +157,51 @@ namespace DAO
             }
         }
 
+        public Epic GetEpicFromId(int id)
+        {
+            using (var context = new ProjectManagementContext())
+            {
+                var epic = context.Epics.Include(e => e.UserStories).FirstOrDefault(e => e.Id == id);
+                return epic;
+            }
+        }
+
+        public void DeleteUserStory(int id, int projectId)
+        {
+            using (var context = new ProjectManagementContext())
+            {
+                var userStory = context.UserStories.Include(u => u.Tasks).FirstOrDefault(u => u.Id == id);
+                foreach(var task in userStory.Tasks)
+                {
+                    context.Tasks.Remove(task);
+                }
+
+                context.UserStories.Remove(userStory);
+                context.SaveChanges();
+            }
+        }
+
+        public void DeleteEpic(int id, int projectId)
+        {
+            using (var context = new ProjectManagementContext())
+            {
+                var epic = context.Epics.Include(e => e.UserStories).Include(e => e.UserStories.Select(u => u.Tasks)).FirstOrDefault(e => e.Id == id);
+                foreach(var userStory in epic.UserStories)
+                {
+
+                    foreach(var task in userStory.Tasks)
+                    {
+                        context.Tasks.Remove(task);
+                    }
+                    context.UserStories.Remove(userStory);
+                }
+                var project = context.Projects.Include(p => p.Epics).FirstOrDefault(p => p.Id == projectId); ;
+                project.Epics.Remove(epic);
+                context.Epics.Remove(epic);
+                context.SaveChanges();
+            }
+        }
+
         public List<Project> GetAllProjects()
         {
             using (var context = new ProjectManagementContext())
