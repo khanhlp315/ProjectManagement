@@ -157,6 +157,15 @@ namespace DAO
             }
         }
 
+        public List<Project> GetAllProjects()
+        {
+            using (var context = new ProjectManagementContext())
+            {
+                var projects = context.Projects.Include(p => p.CreatedUser).Include(p => p.Members).Include(p => p.Sprints).Include(p => p.Epics).Include(p => p.Epics.Select(e => e.UserStories)).Include(p => p.Sprints.Select(sprint => sprint.UserStories)).Include(p => p.Members.Select(member => member.User)).Include(p => p.Epics.Select(epic => epic.UserStories.Select(u => u.Tasks.Select(t => t.AssignedMember))));
+                return projects.ToList();
+            }
+        }
+
         public void ApproveTask(int taskId)
         {
             using (var context = new ProjectManagementContext())

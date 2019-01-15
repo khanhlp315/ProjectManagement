@@ -201,5 +201,10 @@ namespace GUI.Core.ProjectService
         {
             return _projectBUS.GetReports(startDate, endDate);
         }
+
+        public List<Project> GetAllProjects()
+        {
+            return _projectBUS.GetAllProjects();
+        }
     }
 }

@@ -108,10 +108,18 @@ namespace GUI.ViewModels
             _store = store;
             _projectService = projectService;
 
-            CanCreateProject = _store.GetCurrentUser().Permission == Permission.OWNER;
+            var permission = _store.GetCurrentUser().Permission;
+            CanCreateProject = permission == Permission.OWNER;
             _showingProjects = new ObservableCollection<Project>();
             _projects = new ObservableCollection<Project>();
-            _projects.AddRange(_projectService.GetAllProjectsByMember(_store.GetCurrentUser().Id));
+            if(permission == Permission.ADMIN)
+            {
+                _projects.AddRange(_projectService.GetAllProjects());
+            }
+            else
+            {
+                _projects.AddRange(_projectService.GetAllProjectsByMember(_store.GetCurrentUser().Id));
+            }
             UpdateShowingProjects();
         }
 
@@ -132,7 +140,15 @@ namespace GUI.ViewModels
         {
             CanCreateProject = _store.GetCurrentUser().Permission == Permission.OWNER;
             _projects.Clear();
-            _projects.AddRange(_projectService.GetAllProjectsByMember(_store.GetCurrentUser().Id));
+            var permission = _store.GetCurrentUser().Permission;
+            if (permission == Permission.ADMIN)
+            {
+                _projects.AddRange(_projectService.GetAllProjects());
+            }
+            else
+            {
+                _projects.AddRange(_projectService.GetAllProjectsByMember(_store.GetCurrentUser().Id));
+            }
             UpdateShowingProjects();
         }
 
@@ -143,6 +159,10 @@ namespace GUI.ViewModels
                 return;
             }
             var project = Projects.FirstOrDefault(x => x != null && x.Id == projectId);
+            if(project.CreatedUser.Id != _store.GetCurrentUser().Id)
+            {
+                return;
+            }
             var navigationParameter = new NavigationParameters
             {
                 { "Project", project }

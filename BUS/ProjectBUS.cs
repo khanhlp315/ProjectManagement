@@ -36,6 +36,10 @@ namespace BUS
             {
                 throw new CheckedException($"User story {userStory.Title} is already finished.");
             }
+            if(userStory.Tasks.Count == 0)
+            {
+                throw new CheckedException("User story does not have any tasks");
+            }
             userStory.State = UserStoryState.ON_SPRINT;
             _projectDAO.AddUserStoryToSprint(sprintId, userStory);
         }
@@ -117,6 +121,20 @@ namespace BUS
 
         public void StartSprint(Sprint sprint)
         {
+            if(sprint.UserStories.Count == 0)
+            {
+                throw new CheckedException("Sprint has no user stories");
+            }
+            foreach(var userStory in sprint.UserStories)
+            {
+                foreach(var task in userStory.Tasks)
+                {
+                    if(task.AssignedMember == null)
+                    {
+                        throw new CheckedException($"Task {task.Title} has no assignee");
+                    }
+                }
+            }
             if (sprint.State != SprintState.QUEUING)
             {
                 throw new CheckedException($"Sprint has already stảted.");
@@ -162,6 +180,12 @@ namespace BUS
             _projectDAO.AddSprint(projectId, newSprint);
             var project = _projectDAO.GetProjectById(projectId);
             return project.Sprints.OrderByDescending(s => s.Order).First();
+        }
+
+        public List<Project> GetAllProjects()
+        {
+            var projects = _projectDAO.GetAllProjects();
+            return projects;
         }
 
         public List<ReportObject> GetReports(DateTime startDate, DateTime endDate)
@@ -362,6 +386,11 @@ namespace BUS
 
         public void AssignToTask(int memberId, int taskId)
         {
+            var task = _projectDAO.GetTaskById(taskId);
+            if(task.IsApproved)
+            {
+                throw new CheckedException("Cannot assign a completed task");
+            }
             _projectDAO.AssignTask(memberId, taskId);
         }
 

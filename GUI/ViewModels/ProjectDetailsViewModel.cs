@@ -605,24 +605,40 @@ namespace GUI.ViewModels
             if(CurrentSprint.State == SprintState.QUEUING)
             {
                 //start sprint
-                _projectService.StartSprint(CurrentSprint);
-                CurrentSprint = new Sprint()
+                try
                 {
-                    Id = CurrentSprint.Id,
-                    State = SprintState.ACTIVE,
-                    StartDate = CurrentSprint.StartDate,
-                    EndDate = CurrentSprint.EndDate,
-                    Order = CurrentSprint.Order,
-                    UserStories = CurrentSprint.UserStories
-                };
+                    _projectService.StartSprint(CurrentSprint);
+                    CurrentSprint = new Sprint()
+                    {
+                        Id = CurrentSprint.Id,
+                        State = SprintState.ACTIVE,
+                        StartDate = CurrentSprint.StartDate,
+                        EndDate = CurrentSprint.EndDate,
+                        Order = CurrentSprint.Order,
+                        UserStories = CurrentSprint.UserStories
+                    };
+                }
+                catch(CheckedException e)
+                {
+                    ShowError("Error", e.Message);
+                }
             }
             else if (CurrentSprint.State == SprintState.ACTIVE)
             {
-                _projectService.EndSprint(SelectedProject.Id, CurrentSprint);
-                SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
-                SelectedMember = null;
-                UpdateMembers();
-                CurrentSprint = SelectedProject.Sprints.OrderByDescending(p => p.Order).First();
+                try
+                {
+                    _projectService.EndSprint(SelectedProject.Id, CurrentSprint);
+                    SelectedProject = _projectService.GetProjectById(SelectedProject.Id);
+                    SelectedMember = null;
+                    UpdateMembers();
+                    CurrentSprint = SelectedProject.Sprints.OrderByDescending(p => p.Order).First();
+
+                }
+                catch (CheckedException e)
+                {
+                    ShowError("Error", e.Message);
+                }
+
             }
         }
 

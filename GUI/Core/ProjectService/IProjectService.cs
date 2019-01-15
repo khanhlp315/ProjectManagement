@@ -34,5 +34,6 @@ namespace GUI.Core.ProjectService
         void ApproveTask(int taskId);
         void DenyTask(int taskId);
         List<ReportObject> GetReports(DateTime startDate, DateTime endDate);
+        List<Project> GetAllProjects();
     }
 }
