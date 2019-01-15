@@ -191,13 +191,28 @@
                                                             <StackPanel>
                                                                 <StackPanel Orientation="Horizontal">
                                                                     <TextBlock Text="{Binding Title}"/>
-                                                                    <CheckBox IsChecked="{Binding IsApproved}"></CheckBox>
+                                                                    <CheckBox x:Name="taskCheckBox" IsHitTestVisible="False" IsChecked="{Binding IsApproved}">
+                                                                        
+                                                                    </CheckBox>
                                                                 </StackPanel>
                                                                 
                                                                 <StackPanel Orientation="Horizontal">
                                                                     <TextBlock Text="{Binding AssignedMember, Converter={StaticResource MemberToUsername}}">
                                                                     </TextBlock>
-                                                                    <Button Content="Assign" Margin="20" CommandParameter="{Binding Id}" Command="{Binding DataContext.ShowAssignMemberCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DroppableItemsControl}}"></Button>
+                                                                    <Button Content="Assign" Margin="20"  CommandParameter="{Binding Id}" Command="{Binding DataContext.ShowAssignMemberCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=utils:DroppableItemsControl}}">
+                                                                        <Button.Style>
+                                                                            <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding Path=IsChecked,ElementName=taskCheckBox}" Value="True">
+                                                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding Path=IsChecked,ElementName=taskCheckBox}" Value="False">
+                                                                                        <Setter Property="IsEnabled" Value="True"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Button.Style>
+                                                                    </Button>
                                                                 </StackPanel>
                                                             </StackPanel>
                                                         </DataTemplate>
