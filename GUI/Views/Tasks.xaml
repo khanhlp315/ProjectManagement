@@ -15,77 +15,80 @@
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
         <utils:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVis"/>
     </UserControl.Resources>
-    <StackPanel>
-        <Label Content="Remaining tasks"/>
-        <ItemsControl ItemsSource="{Binding UndoneProjects}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Expander Header="{Binding Key}" ToolTip="{Binding Name}">
-                        <ItemsControl ItemsSource="{Binding Epics}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Expander Header="{Binding Title}" ToolTip="{Binding Description}">
-                                        <ItemsControl ItemsSource="{Binding UserStories}">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Expander Header="{Binding Title}" ToolTip="{Binding Description}">
-                                                        <ItemsControl ItemsSource="{Binding Tasks}">
-                                                            <ItemsControl.ItemTemplate>
-                                                                <DataTemplate>
-                                                                    <StackPanel>
-                                                                        <Label Content="{Binding Title}"/>
-                                                                        <Button Content="Complete task" Command="{Binding DataContext.UpdateTaskCompletionCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=4}}" CommandParameter="{Binding Id}"/>
-                                                                    </StackPanel>
-                                                                </DataTemplate>
-                                                            </ItemsControl.ItemTemplate>
-                                                        </ItemsControl>
-                                                    </Expander>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </Expander>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </Expander>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        <Label Content="Waiting for approve tasks"/>
-        <ItemsControl ItemsSource="{Binding UnapprovedProjects}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Expander Header="{Binding Key}" ToolTip="{Binding Name}">
-                        <ItemsControl ItemsSource="{Binding Epics}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Expander Header="{Binding Title}" ToolTip="{Binding Description}">
-                                        <ItemsControl ItemsSource="{Binding UserStories}">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Expander Header="{Binding Title}" ToolTip="{Binding Description}">
-                                                        <ItemsControl ItemsSource="{Binding Tasks}">
-                                                            <ItemsControl.ItemTemplate>
-                                                                <DataTemplate>
-                                                                    <StackPanel>
-                                                                        <Label Content="{Binding Title}"/>
-                                                                        <Button Content="Approve" Command="{Binding DataContext.ApproveCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=4}}" CommandParameter="{Binding Id}"/>
-                                                                        <Button Content="Deny" Command="{Binding DataContext.DenyCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=4}}" CommandParameter="{Binding Id}"/>
-                                                                    </StackPanel>
-                                                                </DataTemplate>
-                                                            </ItemsControl.ItemTemplate>
-                                                        </ItemsControl>
-                                                    </Expander>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </Expander>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </Expander>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </StackPanel>
+    <ScrollViewer>
+        <StackPanel>
+            <Label Content="Remaining tasks"/>
+            <ItemsControl ItemsSource="{Binding UndoneProjects}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Expander Header="{Binding Key}" ToolTip="{Binding Name}">
+                            <ItemsControl ItemsSource="{Binding Epics}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Expander Header="{Binding Title}" ToolTip="{Binding Description}">
+                                            <ItemsControl ItemsSource="{Binding UserStories}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Expander Header="{Binding Title}" ToolTip="{Binding Description}">
+                                                            <ItemsControl ItemsSource="{Binding Tasks}">
+                                                                <ItemsControl.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <StackPanel>
+                                                                            <Label Content="{Binding Title}"/>
+                                                                            <Button Content="Complete task" Command="{Binding DataContext.UpdateTaskCompletionCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=4}}" CommandParameter="{Binding Id}"/>
+                                                                        </StackPanel>
+                                                                    </DataTemplate>
+                                                                </ItemsControl.ItemTemplate>
+                                                            </ItemsControl>
+                                                        </Expander>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </Expander>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Expander>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Label Content="Waiting for approve tasks"/>
+            <ItemsControl ItemsSource="{Binding UnapprovedProjects}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Expander Header="{Binding Key}" ToolTip="{Binding Name}">
+                            <ItemsControl ItemsSource="{Binding Epics}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Expander Header="{Binding Title}" ToolTip="{Binding Description}">
+                                            <ItemsControl ItemsSource="{Binding UserStories}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Expander Header="{Binding Title}" ToolTip="{Binding Description}">
+                                                            <ItemsControl ItemsSource="{Binding Tasks}">
+                                                                <ItemsControl.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <StackPanel>
+                                                                            <Label Content="{Binding Title}"/>
+                                                                            <Button Content="Approve" Command="{Binding DataContext.ApproveCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=4}}" CommandParameter="{Binding Id}"/>
+                                                                            <Button Content="Deny" Command="{Binding DataContext.DenyCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=4}}" CommandParameter="{Binding Id}"/>
+                                                                        </StackPanel>
+                                                                    </DataTemplate>
+                                                                </ItemsControl.ItemTemplate>
+                                                            </ItemsControl>
+                                                        </Expander>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </Expander>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Expander>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </ScrollViewer>
+
 </UserControl>
